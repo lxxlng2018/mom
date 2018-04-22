@@ -1,0 +1,28 @@
+
+.ant-advanced-search-form{
+    margin: 20px 0;
+}
+
+.alert{
+    position: absolute;
+    right: -10px;
+    top:-10px;
+    z-index: 99999;
+    background: #fff;
+    width:300px;
+    height: 150px;
+}
+
+.block_title{
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.home .am-search {
+    background-color:#fff !important;
+    border: 1px #ddd solid;
+}
+
+.home .am-navbar{
+    background-color: #59d6ac;
+}
