@@ -66,53 +66,18 @@ export default class Experience extends Component {
                                 style={{
                                 flex: 2
                             }}>
-                                <Popover
-                                    mask
-                                    placement="bottomRight"
-                                    overlayClassName="fortest"
-                                    overlayStyle={{
-                                    color: 'currentColor'
-                                }}
-                                    visible={this.state.visible}
-                                    overlay={[(
-                                        <Item key="4" value="scan" data-seed="logId">Scan</Item>
-                                    ), (
-                                        <Item
-                                            key="5"
-                                            value="special"
-                                            style={{
-                                            whiteSpace: 'nowrap'
-                                        }}>My Qrcode</Item>
-                                    ), (
-                                        <Item key="6" value="button ct">
-                                            <span
-                                                style={{
-                                                marginRight: 5
-                                            }}>Help</span>
-                                        </Item>
-                                    )]}
-                                    align={{
-                                    overflow: {
-                                        adjustY: 0,
-                                        adjustX: 0
-                                    },
-                                    offset: [20, 0]
-                                }}
-                                    onVisibleChange={this.handleVisibleChange}
-                                    onSelect={this.onSelect}>
-                                    <div
-                                        style={{
-                                        height: '100%',
-                                        padding: '10px 5px',
-                                        marginRight: '-15px',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        border: '1px #ddd solid'
-                                    }}>
-                                        <div>选择分类</div>
-                                        <Icon type="down"/>
-                                    </div>
-                                </Popover>
+                                <div
+                                    style={{
+                                    height: '100%',
+                                    padding: '10px 5px',
+                                    marginRight: '-15px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    border: '1px #ddd solid'
+                                }}>
+                                    <div>选择分类</div>
+                                    <Icon type="down"/>
+                                </div>
                             </Flex.Item>
                             <Flex.Item
                                 style={{

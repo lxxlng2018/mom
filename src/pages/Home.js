@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import moment from 'moment';
+import menus from '../config/menu';
 import {
     Flex,
     WhiteSpace,
@@ -17,12 +18,10 @@ export default class Home extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            list: Array
-                .from(new Array(4))
-                .map((_val, i) => ({text: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', date:moment().format('YYYY.MM.DD')})),
-            menus: Array
-                .from(new Array(9))
-                .map((_val, i) => ({icon: 'https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png', text: `name${i}`}))
+            list:[{
+                title:'asdasd'
+            }],
+            menus:menus
         }
     }
 
@@ -33,20 +32,25 @@ export default class Home extends Component {
         return <div className="home">
             <NavBar
                 mode="dark"
-                rightContent={[< Icon key = "0" type = "search" style = {{ marginRight: '16px' }}/>, <Icon key="1" type="ellipsis" / >]}></NavBar>
+                rightContent={[< Icon key = "0" type = "search" style = {{ marginRight: '16px' }}/>, <Icon key="1" type="ellipsis" / >]}>健康传播</NavBar>
             <div className="content">
                 <Carousel autoplay={false} infinite dots={false}>
-                    <img
-                        src="https://zos.alipayobjects.com/rmsportal/IJOtIlfsYdTyaDTRVrLI.png"
+                    <div className="home-banner">
+                        <div className="home-banner-text">
+                            <div className="home-banner-name">XXX</div>
+                            <div className="home-banner-title">健康传播室</div>
+                        </div>
+                        <img style={{width:'100%'}}
+                        src="./banner/WechatIMG108.jpeg"
                         alt=""/>
+                    </div>
                 </Carousel>
                 <Grid data={this.state.menus} columnNum={3} activeStyle={false} />
                 <div>
                     <List renderHeader={() => <div className="block_title">每日健康提醒</div>}>
                         {
-                            this.state.list.map(item=><Item extra={item.date}>{item.text}</Item>)
+                            this.state.list.map(item=><Item extra={item.date}>{item.title}</Item>)
                         }
-                        
                     </List>
                 </div>
             </div>

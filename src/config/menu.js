@@ -1,0 +1,53 @@
+/**
+ * @name 地区枚举 
+ */
+export default [
+    {
+        icon:'./icons/1.png',
+        text:'每日健康提醒'
+    },
+    {
+        icon:'./icons/2.png',
+        text:'我的治病经验'
+    },
+    {
+        icon:'./icons/3.png',
+        text:'疑难杂症120'
+    },
+    {
+        icon:'./icons/4.png',
+        text:'出生缺陷预防'
+    },
+    {
+        icon:'./icons/5.png',
+        text:'专家孕哺讲座'
+    },
+    {
+        icon:'./icons/6.png',
+        text:'青春婚恋须知'
+    },
+    {
+        icon:'./icons/7.png',
+        text:'交友大世界'
+    },
+    {
+        icon:'./icons/8.png',
+        text:'健康送爸妈'
+    },
+    {
+        icon:'./icons/9.png',
+        text:'百行孝居先'
+    },
+    {
+        icon:'',
+        text:''
+    },
+    {
+        icon:'./icons/10.png',
+        text:'我是传播人'
+    },
+    {
+        icon:'',
+        text:''
+    },
+]

@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Experience from "./pages/Experience";
 import Difficult from "./pages/Difficult";
 import Prevention from "./pages/Prevention";
+import Lecture from "./pages/Lecture";
 import "./styles/common.css";
 
 const App = () => (
@@ -14,6 +15,7 @@ const App = () => (
       <Route path='/experience' component={Experience}/>
       <Route path='/difficult' component={Difficult}/>
       <Route path='/prevention' component={Prevention}/>
+      <Route path='/lecture' component={Lecture}/>
     </Switch>
   </Router>
 )

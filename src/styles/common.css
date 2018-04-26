@@ -1,3 +1,8 @@
+body{
+    background-color: #fff !important;
+    padding: 0 0 30px;
+}
+
 
 .ant-advanced-search-form{
     margin: 20px 0;
@@ -26,3 +31,35 @@
 .home .am-navbar{
     background-color: #59d6ac;
 }
+
+.home-banner {
+    position: relative;
+}
+
+
+.home-banner-text{
+    position: absolute;
+    left: 20px;
+    top:30px;
+}
+
+.home-banner-name {
+    font-size: 20px;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.home-banner-title{
+    font-size: 28px;
+}
+
+.home .block_title{
+    background: #59d6ac;
+    color:#fff;
+    width:160px;
+    font-size: 20px;
+    text-align: center;
+    padding: 10px;
+    margin-left: -20px;
+}
+

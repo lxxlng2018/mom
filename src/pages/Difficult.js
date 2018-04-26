@@ -1,3 +1,6 @@
+/**
+ * @name 疑难杂症120
+ */
 import React, {Component} from 'react';
 import moment from 'moment';
 import {
