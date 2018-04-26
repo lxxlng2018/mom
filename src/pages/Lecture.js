@@ -39,69 +39,21 @@ export default class Lecture extends Component {
     render() {
 
         return <div className="home">
-            <NavBar mode="dark" rightContent={[< Icon key = "1" type = "ellipsis" / >]}>疑难杂症120</NavBar>
+            <NavBar mode="dark" rightContent={[< Icon key="1" type="ellipsis" />]}>专家孕哺讲座</NavBar>
             <div className="content">
-                <Tabs
-                    tabs={[
-                    {
-                        title: '大家来帮助'
-                    }, {
-                        title: '我要求助'
-                    },
-                    {
-                        title: '谢谢帮助'
-                    },
-                    {
-                        title: '助人有乐'
-                    }
-                ]}
-                    initialPage={0}
-                    onChange={(tab, index) => {
-                    console.log('onChange', index, tab);
-                }}
-                    onTabClick={(tab, index) => {
-                    console.log('onTabClick', index, tab);
-                }}>
-                    <div
-                        style={{
-                        padding: '30px 5px',
-                        backgroundColor: '#fff'
-                    }}>
-                        <div
-                            style={{
-                            padding: '20px 0'
-                        }}>
-                            <List>
-                                {this
-                                    .state
-                                    .list
-                                    .map((item, index) => {
-                                        return <Item arrow="horizontal" key={index} extra={item.date}>{item.text}</Item>
-                                    })
-}
-                            </List>
-                        </div>
-                    </div>
-                    <div
-                        style={{
-                        backgroundColor: '#fff'
-                    }}>
-                        <WhiteSpace size="lg"/>
-                        <WingBlank>
-                            <List renderHeader={() => '我的经验'}>
-                                <TextareaItem
-                                    title=""
-                                    placeholder="在此输入"
-                                    data-seed="logId"
-                                    rows="6"
-                                    ref={el => this.autoFocusInst = el}
-                                    autoHeight/>
-                            </List>
-                            <Button type="primary">提交</Button>
-                        </WingBlank>
-                        <WhiteSpace size="lg"/>
-                    </div>
-                </Tabs>
+                <List>
+                    <Item
+                        thumb={<img style={{ width: 100, height: 60 }} src="https://upload.jianshu.io/admin_banners/web_images/4300/30d9d47ea36263ee2a83b953de7230dda74e81c4.png?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540" />}
+                        multipleLine
+                        wrap={true}
+                        arrow="horizontal"
+                    >
+                        asdasdasdasdasdasd
+                        asdasdasdasdasdasdasd
+                        asdadasd
+                        asdasdasd
+                            </Item>
+                </List>
             </div>
         </div>
 

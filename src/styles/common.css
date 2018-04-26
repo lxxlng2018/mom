@@ -63,3 +63,7 @@ body{
     margin-left: -20px;
 }
 
+
+.am-button-borderfix.am-button-icon{
+    display: inline-flex;
+}

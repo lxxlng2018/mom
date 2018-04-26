@@ -6,6 +6,8 @@ import Experience from "./pages/Experience";
 import Difficult from "./pages/Difficult";
 import Prevention from "./pages/Prevention";
 import Lecture from "./pages/Lecture";
+import Notes from "./pages/Notes";
+import Firends from "./pages/Firends";
 import "./styles/common.css";
 
 const App = () => (
@@ -16,6 +18,8 @@ const App = () => (
       <Route path='/difficult' component={Difficult}/>
       <Route path='/prevention' component={Prevention}/>
       <Route path='/lecture' component={Lecture}/>
+      <Route path='/notes' component={Notes}/>
+      <Route path='/firends' component={Firends}/>
     </Switch>
   </Router>
 )
