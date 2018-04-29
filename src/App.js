@@ -8,6 +8,8 @@ import Prevention from "./pages/Prevention";
 import Lecture from "./pages/Lecture";
 import Notes from "./pages/Notes";
 import Firends from "./pages/Firends";
+import MyCard from "./pages/MyCard";
+import Health from "./pages/Health";
 import "./styles/common.css";
 
 const App = () => (
@@ -20,6 +22,8 @@ const App = () => (
       <Route path='/lecture' component={Lecture}/>
       <Route path='/notes' component={Notes}/>
       <Route path='/firends' component={Firends}/>
+      <Route path='/mycard' component={MyCard}/>
+      <Route path='/health' component={Health}/>
     </Switch>
   </Router>
 )

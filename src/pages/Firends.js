@@ -17,7 +17,8 @@ import {
     Button,
     Popover,
     TextareaItem,
-    Tag
+    Tag,
+    Picker
 } from 'antd-mobile';
 
 const Item = List.Item
@@ -26,18 +27,38 @@ export default class Firends extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            list: Array
-                .from(new Array(4))
-                .map((_val, i) => ({
-                    text: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-                    date: moment().format('YYYY.MM.DD')
-                }))
+            users:[
+                {
+                    thumb:'/icons/1.png',
+                    name:'adsd',
+                    text:'asdasdasd'
+                },
+                {
+                    thumb:'/icons/2.png',
+                    name:'adsd',
+                    text:'asdasdasd'
+                },
+                {
+                    thumb:'/icons/2.png',
+                    name:'adsd',
+                    text:'asdasdasd'
+                }
+            ]
         }
     }
 
     componentDidMount() { }
 
     render() {
+        const gridItem = (item,index)=><div key={index} className="user_item">
+            <div className="head">
+                <img style={{width:'100%'}} src={item.thumb} alt={item.name}/>
+                <div className="name">{item.name}</div>
+            </div>
+            <div>
+                目的：{item.text}
+            </div>
+        </div>
 
         return <div className="home">
             <NavBar mode="dark" rightContent={[< Icon key="1" type="ellipsis" />]}>交友大世界</NavBar>
@@ -82,9 +103,10 @@ export default class Firends extends Component {
                                     style={{
                                         margin: '4px'
                                     }}
+                                    className="am-button-borderfix"
                                     icon="down"
                                     size="small"
-                                    className="am-button-borderfix">目的</Button>
+                                    >目的</Button>
                                 <Button
                                     type="ghost"
                                     inline
@@ -133,7 +155,7 @@ export default class Firends extends Component {
                             </div>
                         </Flex>
 
-                        <Flex style={{margin:'20px 0'}}>
+                        <Flex style={{margin:'20px 0',overflow:'inherit'}}>
                             <div
                                 style={{
                                     flex: 1,
@@ -144,11 +166,15 @@ export default class Firends extends Component {
                             <div style={{
                                 flex: 4
                             }}>
-                                <Tag closable>年龄</Tag>
-                                <Tag closable>重庆</Tag>
+                                <Tag style={{margin:'0 2px'}} closable>年龄</Tag>
+                                <Tag style={{margin:'0 2px'}} closable>重庆</Tag>
                             </div>
 
                         </Flex>
+
+                        <div className="grid-user">
+                            {this.state.users.map(gridItem)}
+                        </div>
                     </div>
                 </Tabs>
             </div>
