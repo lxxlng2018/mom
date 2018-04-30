@@ -2,6 +2,8 @@ import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
+import Regist from "./pages/Regist";
+import Login from "./pages/Login";
 import Experience from "./pages/Experience";
 import Difficult from "./pages/Difficult";
 import Prevention from "./pages/Prevention";
@@ -16,6 +18,8 @@ import "./styles/common.css";
 const App = () => (
   <Router>
     <Switch>
+      <Route path='/login' component={Login}/>
+      <Route path='/regist' component={Regist}/>
       <Route path='/home' component={Home}/>
       <Route path='/experience' component={Experience}/>
       <Route path='/difficult' component={Difficult}/>

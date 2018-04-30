@@ -19,16 +19,16 @@ export default class Home extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            list:[{
-                title:'asdasd'
-            }],
+            list:[],
             menus:menus
         }
     }
 
     componentDidMount() {
         UserService.getEveryDayNotice().then(res=>{
-            console.log(res);
+            this.setState({
+                list:res.data.result
+            })
         }).catch(err=>{
             console.log(err);
         })
@@ -56,7 +56,7 @@ export default class Home extends Component {
                 <div>
                     <List renderHeader={() => <div className="block_title">每日健康提醒</div>}>
                         {
-                            this.state.list.map(item=><Item extra={item.date}>{item.title}</Item>)
+                            this.state.list.map(item=><Item key={item.id} extra={item.add_time}>{item.title}</Item>)
                         }
                     </List>
                 </div>
