@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import moment from 'moment';
 import menus from '../config/menu';
+import UserService from '../service//UserService'
 import {
     Flex,
     WhiteSpace,
@@ -25,7 +26,13 @@ export default class Home extends Component {
         }
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        UserService.getEveryDayNotice().then(res=>{
+            console.log(res);
+        }).catch(err=>{
+            console.log(err);
+        })
+    }
 
     render() {
 

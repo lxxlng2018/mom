@@ -10,6 +10,7 @@ import Notes from "./pages/Notes";
 import Firends from "./pages/Firends";
 import MyCard from "./pages/MyCard";
 import Health from "./pages/Health";
+import Spread from "./pages/Spread";
 import "./styles/common.css";
 
 const App = () => (
@@ -24,6 +25,7 @@ const App = () => (
       <Route path='/firends' component={Firends}/>
       <Route path='/mycard' component={MyCard}/>
       <Route path='/health' component={Health}/>
+      <Route path='/spread' component={Spread}/>
     </Switch>
   </Router>
 )
