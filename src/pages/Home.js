@@ -20,8 +20,17 @@ export default class Home extends Component {
         super(props)
         this.state = {
             list:[],
+            userInfo:null,
             menus:menus
         }
+    }
+    componentWillMount() {
+        UserService.getUserInfo().then(userinfo=>{
+            console.log(userinfo);
+            this.setState({
+                userInfo:userinfo.info
+            })
+        })
     }
 
     componentDidMount() {
@@ -44,7 +53,7 @@ export default class Home extends Component {
                 <Carousel autoplay={false} infinite dots={false}>
                     <div className="home-banner">
                         <div className="home-banner-text">
-                            <div className="home-banner-name">XXX</div>
+                            <div className="home-banner-name">{this.state.userInfo || this.state.userInfo.true_name}</div>
                             <div className="home-banner-title">健康传播室</div>
                         </div>
                         <img style={{width:'100%'}}
