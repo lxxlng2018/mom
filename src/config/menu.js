@@ -4,35 +4,43 @@
 export default [
     {
         icon:'./icons/1.png',
-        text:'每日健康提醒'
+        text:'每日健康提醒',
+        url:'#/home'
     },
     {
         icon:'./icons/2.png',
-        text:'我的治病经验'
+        text:'我的治病经验',
+        url:'#/experience'
     },
     {
         icon:'./icons/3.png',
-        text:'疑难杂症120'
+        text:'疑难杂症120',
+        url:'#/difficult'
     },
     {
         icon:'./icons/4.png',
-        text:'出生缺陷预防'
+        text:'出生缺陷预防',
+        url:'#/prevention'
     },
     {
         icon:'./icons/5.png',
-        text:'专家孕哺讲座'
+        text:'专家孕哺讲座',
+        url:'#/lecture'
     },
     {
         icon:'./icons/6.png',
-        text:'青春婚恋须知'
+        text:'青春婚恋须知',
+        url:'#/notes'
     },
     {
         icon:'./icons/7.png',
-        text:'交友大世界'
+        text:'交友大世界',
+        url:'#/firends'
     },
     {
         icon:'./icons/8.png',
-        text:'健康送爸妈'
+        text:'健康送爸妈',
+        url:'#/health'
     },
     {
         icon:'./icons/9.png',

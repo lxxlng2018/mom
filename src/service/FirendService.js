@@ -1,29 +1,31 @@
-import AV from '../../common/service/HttpService';
+import $ from 'jquery'
+import base from '../config/base'
+const host = base.host
 export default {
-    getUsers: () => {
-        const User = new AV.Query('_User');
-        return User.find();
+    getTypes:()=>{
+        return new Promise((reslove, reject) => {
+            $
+                .get(`${host}/Wap/healthuser/friendCardList`, {
+                    JKCBSSESSID: localStorage.getItem('token'),
+                    page: 1
+                }, function (res) {
+                    if(res.status){
+                        reslove(res.data)
+                    }
+                }, 'json')
+        })
     },
-    getUser: () => {
-
-    },
-    getLatestUser: () => {
-        return AV.Cloud.run('latestNewUser')
-    },
-    getLatestMember: (cb) => {
-        let MemberQuery = new AV.Query('Member')
-            MemberQuery.limit(10)
-            MemberQuery.descending('createdAt')
-            MemberQuery.include('user')
-            return MemberQuery.subscribe()
-            .then(query => {
-                query.on('create',user=>{
-                    cb && cb('create',user)
-                })
-                query.on('update',user=>{
-                    cb && cb('update',user)
-                })
-                return MemberQuery.find()
-            })
+    getCardList:()=>{
+        return new Promise((reslove, reject) => {
+            $
+                .post(`${host}/Wap/healthuser/friendCardList`, {
+                    JKCBSSESSID: localStorage.getItem('token'),
+                    page: 1
+                }, function (res) {
+                    if(res.status){
+                        reslove(res.data)
+                    }
+                }, 'json')
+        })
     }
 }

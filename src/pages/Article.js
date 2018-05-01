@@ -1,8 +1,9 @@
 /**
- * @name 青春婚恋须知
+ * @name 文章内容
  */
 import React, {Component} from 'react';
 import moment from 'moment';
+import {createForm} from 'rc-form'
 import {
     Flex,
     WhiteSpace,
@@ -16,27 +17,26 @@ import {
     SearchBar,
     Button,
     Popover,
-    TextareaItem
+    TextareaItem,
+    Tag,
+    Picker,
+    InputItem
 } from 'antd-mobile';
 
 const Item = List.Item
 
-export default class Notes extends Component {
+export default class MyCard extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            list:[]
-        }
+        this.state = {}
     }
 
     componentDidMount() {}
 
     render() {
-
         return <div className="home">
-            <NavBar mode="dark" rightContent={[< Icon key = "1" type = "ellipsis" / >]}>青春婚恋须知</NavBar>
+            <NavBar mode="dark" rightContent={[< Icon key = "1" type = "ellipsis" />]}>健康送爸妈</NavBar>
             <div className="content">
-                <iframe frameBorder={0} style={{width:'100%',height:800}} src="http://www.669669669.com/wap/index/hlxz"></iframe>
             </div>
         </div>
 

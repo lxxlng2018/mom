@@ -24,23 +24,29 @@ export default class Home extends Component {
             menus:menus
         }
     }
-    componentWillMount() {
-        UserService.getUserInfo().then(userinfo=>{
-            console.log(userinfo);
+
+    componentDidMount() {
+        UserService.getUserInfo().then(({info})=>{
             this.setState({
-                userInfo:userinfo.info
+                userInfo:info
             })
+            return UserService.getEveryDayNotice().then(res=>{
+                console.log(res)
+                this.setState({
+                    list:res.data.result
+                })
+            })
+        })
+        .catch(err=>{
+            console.log(err);
         })
     }
 
-    componentDidMount() {
-        UserService.getEveryDayNotice().then(res=>{
-            this.setState({
-                list:res.data.result
-            })
-        }).catch(err=>{
-            console.log(err);
-        })
+    handleUrl(e){
+        console.log(e)
+        if(e.url){
+            window.location.href = e.url
+        }
     }
 
     render() {
@@ -53,7 +59,7 @@ export default class Home extends Component {
                 <Carousel autoplay={false} infinite dots={false}>
                     <div className="home-banner">
                         <div className="home-banner-text">
-                            <div className="home-banner-name">{this.state.userInfo || this.state.userInfo.true_name}</div>
+                            <div className="home-banner-name">{this.state.userInfo && this.state.userInfo.true_name}</div>
                             <div className="home-banner-title">健康传播室</div>
                         </div>
                         <img style={{width:'100%'}}
@@ -61,7 +67,7 @@ export default class Home extends Component {
                         alt=""/>
                     </div>
                 </Carousel>
-                <Grid data={this.state.menus} columnNum={3} activeStyle={false} />
+                <Grid data={this.state.menus} onClick={this.handleUrl} columnNum={3} activeStyle={false} />
                 <div>
                     <List renderHeader={() => <div className="block_title">每日健康提醒</div>}>
                         {

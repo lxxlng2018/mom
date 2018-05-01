@@ -16,10 +16,12 @@ import {
     SearchBar,
     Button,
     Popover,
-    TextareaItem
+    TextareaItem,
+    Modal
 } from 'antd-mobile';
 
 const Item = List.Item
+const alert = Modal.alert
 
 export default class Prevention extends Component {
     constructor(props) {
@@ -30,12 +32,37 @@ export default class Prevention extends Component {
                 .map((_val, i) => ({
                     text: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
                     date: moment().format('YYYY.MM.DD')
-                }))
+                })),
+            _height:400
         }
     }
 
-    componentDidMount() {}
-
+    componentDidMount() {
+        this.setState({
+            _height:window.screen.height
+        })
+    }
+    handleMenuTab = (index)=>{
+        console.log(index)
+        switch (index) {
+            case 0:
+                this.handleGetHelpList()
+                break;
+            case 1:
+                alert('提示',"电脑端操作体验更好",[{
+                    text:'知道了',
+                    onPress:()=>{}
+                }])
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                break;
+        }
+    }
+    
     render() {
 
         return <div className="home">
@@ -52,12 +79,9 @@ export default class Prevention extends Component {
                     }
                 ]}
                     initialPage={0}
-                    onChange={(tab, index) => {
-                    console.log('onChange', index, tab);
-                }}
-                    onTabClick={(tab, index) => {
-                    console.log('onTabClick', index, tab);
-                }}>
+                    onChange={(tab, index) =>{
+                        this.handleMenuTab(index)
+                    }}>
                     <div
                         style={{
                         padding: '30px 5px',
@@ -81,20 +105,7 @@ export default class Prevention extends Component {
                         style={{
                         backgroundColor: '#fff'
                     }}>
-                        <WhiteSpace size="lg"/>
-                        <WingBlank>
-                            <List renderHeader={() => '我的经验'}>
-                                <TextareaItem
-                                    title=""
-                                    placeholder="在此输入"
-                                    data-seed="logId"
-                                    rows="6"
-                                    ref={el => this.autoFocusInst = el}
-                                    autoHeight/>
-                            </List>
-                            <Button type="primary">提交</Button>
-                        </WingBlank>
-                        <WhiteSpace size="lg"/>
+                        <iframe style={{width:'100%',height:this.state._height}} src="http://www.669669669.com/index/momtest"></iframe>
                     </div>
                 </Tabs>
             </div>

@@ -2,6 +2,7 @@
  * @name 交友大世界
  */
 import React, { Component } from 'react';
+import { instanceOf } from 'prop-types';
 import moment from 'moment';
 import {
     Flex,
@@ -18,44 +19,115 @@ import {
     Popover,
     TextareaItem,
     Tag,
-    Picker
+    Modal,
+    Radio
 } from 'antd-mobile';
 
+import FirendService from '../service/FirendService'
+
 const Item = List.Item
+const RadioItem = Radio.RadioItem
 
 export default class Firends extends Component {
+
     constructor(props) {
         super(props)
         this.state = {
             users:[
                 {
-                    thumb:'/icons/1.png',
-                    name:'adsd',
+                    thumb:'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1781615267,834481015&fm=27&gp=0.jpg',
+                    name:'网名A',
                     text:'asdasdasd'
                 },
                 {
-                    thumb:'/icons/2.png',
-                    name:'adsd',
+                    thumb:'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1781615267,834481015&fm=27&gp=0.jpg',
+                    name:'网名B',
                     text:'asdasdasd'
                 },
                 {
-                    thumb:'/icons/2.png',
-                    name:'adsd',
+                    thumb:'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1781615267,834481015&fm=27&gp=0.jpg',
+                    name:'网名C',
                     text:'asdasdasd'
-                }
-            ]
+                },
+            ],
+            types:[],
+            type:"age_range",
+            checked:{
+                jy_yx:null,
+                sex:null,
+                age_range:null,
+                SHENGSHI:null,
+                profession:null
+            },
+            cardShow:false,
+            card:{},
+            modal:false
         }
     }
 
-    componentDidMount() { }
+    componentDidMount() {
+        this.handleGetTypes()
+        this.handleGetData()
+    }
+
+    handleGetData = ()=>{
+        FirendService.getCardList().then(res=>{
+            // this.setState({types:res})
+        })
+    }
+
+    handleGetTypes = ()=>{
+        FirendService.getTypes().then(res=>{
+            this.setState({types:res})
+        })
+    }
+
+    handleModal = type=>{
+        this.setState({
+            modal:true,
+            type
+        })
+    }
+
+    onClose = ()=>{
+        this.setState({
+            modal:false
+        })
+    }
+
+    handleCheck = checkedItem=>{
+        let {type,checked} = this.state;
+        checked[type] = checkedItem
+        this.setState({
+            checked,
+            modal:false
+        })
+    }
+
+    handleMenuTab = (index)=>{
+        switch (index) {
+            case 0:
+                break;
+            case 1:
+                window.location.href = '#/mycard'
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                break;
+        }
+    }
 
     render() {
+        const {checked,type} = this.state
         const gridItem = (item,index)=><div key={index} className="user_item">
             <div className="head">
                 <img style={{width:'100%'}} src={item.thumb} alt={item.name}/>
                 <div className="name">{item.name}</div>
             </div>
-            <div>
+            <div class="peps">
                 目的：{item.text}
             </div>
         </div>
@@ -77,10 +149,7 @@ export default class Firends extends Component {
                     ]}
                     initialPage={0}
                     onChange={(tab, index) => {
-                        console.log('onChange', index, tab);
-                    }}
-                    onTabClick={(tab, index) => {
-                        console.log('onTabClick', index, tab);
+                       this.handleMenuTab(index)
                     }}>
                     <div
                         style={{
@@ -106,6 +175,7 @@ export default class Firends extends Component {
                                     className="am-button-borderfix"
                                     icon="down"
                                     size="small"
+                                    onClick={()=>this.handleModal('jy_yx')}
                                     >目的</Button>
                                 <Button
                                     type="ghost"
@@ -115,6 +185,7 @@ export default class Firends extends Component {
                                     }}
                                     icon="down"
                                     size="small"
+                                    onClick={()=>this.handleModal('sex')}
                                     className="am-button-borderfix">性别</Button>
                                 <Button
                                     type="ghost"
@@ -124,6 +195,7 @@ export default class Firends extends Component {
                                     }}
                                     icon="down"
                                     size="small"
+                                    onClick={()=>this.handleModal('age_range')}
                                     className="am-button-borderfix">年龄</Button>
                                 <Button
                                     type="ghost"
@@ -133,6 +205,7 @@ export default class Firends extends Component {
                                     }}
                                     icon="down"
                                     size="small"
+                                    onClick={()=>this.handleModal('SHENGSHI')}
                                     className="am-button-borderfix">地区</Button>
                                 <Button
                                     type="ghost"
@@ -142,6 +215,7 @@ export default class Firends extends Component {
                                     }}
                                     icon="down"
                                     size="small"
+                                    onClick={()=>this.handleModal('profession')}
                                     className="am-button-borderfix">行业</Button>
                                 <Button
                                     type="ghost"
@@ -166,8 +240,13 @@ export default class Firends extends Component {
                             <div style={{
                                 flex: 4
                             }}>
-                                <Tag style={{margin:'0 2px'}} closable>年龄</Tag>
-                                <Tag style={{margin:'0 2px'}} closable>重庆</Tag>
+                                {
+                                    Object.keys(checked).map((item,index)=>{
+                                        if(checked[item]){
+                                            return <Tag key={checked[item]?checked[item].id:index} style={{margin:'2px 5px'}} closable>{checked[item].name}</Tag>
+                                        }
+                                    })
+                                }
                             </div>
 
                         </Flex>
@@ -177,6 +256,48 @@ export default class Firends extends Component {
                         </div>
                     </div>
                 </Tabs>
+                <Modal
+                    popup
+                    visible={this.state.modal}
+                    closable={true}
+                    maskClosable={true}
+                    onClose={()=>this.onClose('modal')}
+                    animationType="slide-up"
+                    >
+                    <div style={{height:400,overflow:'auto'}}>
+                        <List>
+                            {
+                                this.state.types && this.state.types.filter(item=>{
+                                    return item.type == this.state.type
+                                }).map(item=><RadioItem key={item.id} onChange={()=>this.handleCheck(item)} checked={checked[type] && checked[type].id === item.id}>{item.name}</RadioItem>)
+                            }
+                        </List>
+                    </div>
+                </Modal>
+
+                <Modal
+                    visible={this.state.cardShow}
+                    title="张山"
+                    transparent
+                    footer={[{ text: '我要邀请', onPress: () => {}}]}
+                >
+                    <div className="user_item">
+                        <div className="head">
+                            <img style={{width:'100%'}} src={`https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1781615267,834481015&fm=27&gp=0.jpg`} alt={`张山`}/>
+                        </div>
+                        <List>
+                            <Item>目的:asdasdasd</Item>
+                            <Item>年龄:asdasdasd</Item>
+                            <Item>性别:男</Item>
+                            <Item>地区:asdasdasd</Item>
+                            <Item>行业:asdasdasd</Item>
+                            <Item>爱好:asdasdasd</Item>
+                            <Item>学历:asdasdasd</Item>
+                            <Item>性格:asdasdasd</Item>
+                            <Item>学历:asdasdasd</Item>
+                        </List>
+                    </div>
+                </Modal>
             </div>
         </div>
 

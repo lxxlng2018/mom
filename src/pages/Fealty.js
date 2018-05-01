@@ -1,5 +1,5 @@
 /**
- * @name 青春婚恋须知
+ * @name 百行孝居先
  */
 import React, {Component} from 'react';
 import moment from 'moment';
@@ -21,7 +21,7 @@ import {
 
 const Item = List.Item
 
-export default class Notes extends Component {
+export default class Fealty extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -36,7 +36,7 @@ export default class Notes extends Component {
         return <div className="home">
             <NavBar mode="dark" rightContent={[< Icon key = "1" type = "ellipsis" / >]}>青春婚恋须知</NavBar>
             <div className="content">
-                <iframe frameBorder={0} style={{width:'100%',height:800}} src="http://www.669669669.com/wap/index/hlxz"></iframe>
+                
             </div>
         </div>
 

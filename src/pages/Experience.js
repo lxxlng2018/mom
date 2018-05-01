@@ -13,8 +13,12 @@ import {
     SearchBar,
     Button,
     Popover,
-    TextareaItem
+    TextareaItem,
+    InputItem,
+    Toast
 } from 'antd-mobile';
+
+import ExpriceService from '../service/ExpriceService'
 
 const Item = List.Item
 
@@ -22,16 +26,45 @@ export default class Experience extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            list: Array
-                .from(new Array(4))
-                .map((_val, i) => ({
-                    text: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-                    date: moment().format('YYYY.MM.DD')
-                }))
+            list:[],
+            btnLoading:false
         }
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        ExpriceService.getList().then(res=>{
+            this.setState({
+                list:res.result
+            })
+        })
+    }
+
+    handleAdd =()=>{
+        const {title,content}=this.state
+        if(!title){
+            return Toast.fail('请输入标题', 1);
+        }
+        if(!content){
+            return Toast.fail('请输入内容', 1);
+        }
+        this.setState({
+            btnLoading:true
+        })
+        ExpriceService.add({title,content}).then(res=>{
+            if(res){
+                Toast.success('添加成功', 1,()=>{
+                    window.location.reload()
+                });
+            }
+        })
+    }
+
+    handleValue(key,value){
+        console.log()
+        this.setState({
+            [key]:value
+        })
+    }
 
     render() {
 
@@ -50,9 +83,7 @@ export default class Experience extends Component {
                     onChange={(tab, index) => {
                     console.log('onChange', index, tab);
                 }}
-                    onTabClick={(tab, index) => {
-                    console.log('onTabClick', index, tab);
-                }}>
+                    onTabClick={(tab, index) => {}}>
                     <div
                         style={{
                         padding: '30px 5px',
@@ -95,7 +126,7 @@ export default class Experience extends Component {
                                     .state
                                     .list
                                     .map((item, index) => {
-                                        return <Item key={index} extra={item.date}>{item.text}</Item>
+                                        return <Item key={item.id} extra={item.add_time}>{item.title}</Item>
                                     })
 }
                             </List>
@@ -107,16 +138,20 @@ export default class Experience extends Component {
                     }}>
                         <WhiteSpace size="lg"/>
                         <WingBlank>
-                            <List renderHeader={() => '我的经验'}>
+                            <List>
+                                <InputItem
+                                placeholder="在此输入标题"
+                                onChange={(value)=>{this.handleValue('title',value)}}
+                                >标题</InputItem>
                                 <TextareaItem
-                                    title=""
-                                    placeholder="在此输入"
+                                    title="内容"
+                                    placeholder="在此输入我的经验"
                                     data-seed="logId"
                                     rows="6"
-                                    ref={el => this.autoFocusInst = el}
+                                    onChange={(value)=>{this.handleValue('content',value)}}
                                     autoHeight/>
                             </List>
-                            <Button type="primary">提交</Button>
+                            <Button loading={this.state.btnLoading} disabled={this.state.btnLoading} onClick={this.handleAdd} type="primary">提交</Button>
                         </WingBlank>
                         <WhiteSpace size="lg"/>
                     </div>

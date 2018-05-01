@@ -13,17 +13,17 @@ export default {
     getUserInfo:()=>{
         return new Promise((reslove,reject)=>{
             $.post(`${host}/wap/healthuser/getUser`,{
-                JKCBSSESSID: '2qo9i2aglkm676paombiee2eo1'
+                JKCBSSESSID: localStorage.getItem('token')
             },function(userinfo){
                 reslove(userinfo)
-            })
+            },'json')
         })
     },
     getEveryDayNotice : () => {
         return new Promise((reslove, reject) => {
             $
                 .post(`${host}/Wap/healthuser/mrjktx`, {
-                    JKCBSSESSID: '2qo9i2aglkm676paombiee2eo1',
+                    JKCBSSESSID: localStorage.getItem('token'),
                     page: 1
                 }, function (res) {
                     reslove(res)

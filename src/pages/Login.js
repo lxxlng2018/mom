@@ -32,6 +32,8 @@ export default class Home extends Component {
             .then(res => {
                 console.log(res);
                 // this.setState({     list: })
+                localStorage.setItem('token',res.info)
+                window.location.href = '/home'
             })
             .catch(err => {
                 console.log(err);
@@ -39,7 +41,9 @@ export default class Home extends Component {
     }
 
     handleUserName = e=>{
-        console.log(e)
+    }
+
+    handleLogin = ()=>{
     }
 
     render() {
@@ -52,7 +56,7 @@ export default class Home extends Component {
                 <List>
                     <InputItem onChange={(e)=>{this.handleUserName(e)}}>账号</InputItem>
                     <InputItem>密码</InputItem>
-                    <Item><Button>登录</Button></Item>
+                    <Item><Button onClick={this.handleLogin}>登录</Button></Item>
                 </List>
             </div>
         </div>
