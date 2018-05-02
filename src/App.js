@@ -1,10 +1,11 @@
 import React from 'react';
-import {HashRouter as Router, Route, Switch} from 'react-router-dom';
+import {HashRouter as Router, Route, Switch,Redirect} from 'react-router-dom';
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import Regist from "./pages/Regist";
 import Login from "./pages/Login";
 import Experience from "./pages/Experience";
+import Article from "./pages/Article";
 import Difficult from "./pages/Difficult";
 import Prevention from "./pages/Prevention";
 import Lecture from "./pages/Lecture";
@@ -19,19 +20,21 @@ import "./styles/common.css";
 const App = () => (
     <Router>
       <Switch>
-        <Route path='/login' component={Login}/>
-        <Route path='/regist' component={Regist}/>
-        <Route path='/home' component={Home}/>
-        <Route path='/experience' component={Experience}/>
-        <Route path='/difficult' component={Difficult}/>
-        <Route path='/prevention' component={Prevention}/>
-        <Route path='/lecture' component={Lecture}/>
-        <Route path='/notes' component={Notes}/>
-        <Route path='/firends' component={Firends}/>
-        <Route path='/mycard' component={MyCard}/>
-        <Route path='/health' component={Health}/>
-        <Route path='/fealty' component={Fealty}/>
-        <Route path='/spread' component={Spread}/>
+        <Route path='/login' exact component={Login}/>
+        <Route path='/regist' exact component={Regist}/>
+        <Route path='/home' exact component={Home}/>
+        <Route path='/experience' exact component={Experience}/>
+        <Route path='/experience/:id' exact component={Article}/>
+        <Route path='/difficult' exact component={Difficult}/>
+        <Route path='/prevention' exact component={Prevention}/>
+        <Route path='/lecture' exact component={Lecture}/>
+        <Route path='/notes' exact component={Notes}/>
+        <Route path='/firends' exact component={Firends}/>
+        <Route path='/mycard' exact component={MyCard}/>
+        <Route path='/health' exact component={Health}/>
+        <Route path='/fealty' exact component={Fealty}/>
+        <Route path='/spread' exact component={Spread}/>
+        <Redirect path='/' to='/home' />
       </Switch>
     </Router>
 )

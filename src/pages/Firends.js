@@ -127,7 +127,7 @@ export default class Firends extends Component {
                 <img style={{width:'100%'}} src={item.thumb} alt={item.name}/>
                 <div className="name">{item.name}</div>
             </div>
-            <div class="peps">
+            <div className="peps">
                 目的：{item.text}
             </div>
         </div>

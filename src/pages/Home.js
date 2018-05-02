@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import moment from 'moment';
 import menus from '../config/menu';
+import base from '../config/base';
 import UserService from '../service//UserService'
 import {
     Flex,
@@ -14,6 +15,7 @@ import {
 } from 'antd-mobile';
 
 const Item = List.Item
+const {file_host} = base
 
 export default class Home extends Component {
     constructor(props) {
@@ -53,8 +55,7 @@ export default class Home extends Component {
 
         return <div className="home">
             <NavBar
-                mode="dark"
-                rightContent={[< Icon key = "0" type = "search" style = {{ marginRight: '16px' }}/>, <Icon key="1" type="ellipsis" / >]}>健康传播</NavBar>
+                mode="dark">健康传播</NavBar>
             <div className="content">
                 <Carousel autoplay={false} infinite dots={false}>
                     <div className="home-banner">
@@ -63,7 +64,7 @@ export default class Home extends Component {
                             <div className="home-banner-title">健康传播室</div>
                         </div>
                         <img style={{width:'100%'}}
-                        src="./banner/WechatIMG108.jpeg"
+                        src={`${file_host}/WechatIMG108.jpeg`}
                         alt=""/>
                     </div>
                 </Carousel>

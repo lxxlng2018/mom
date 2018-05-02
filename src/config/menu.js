@@ -1,49 +1,51 @@
 /**
  * @name 地区枚举 
  */
+import base from './base'
+const {file_host} = base
 export default [
     {
-        icon:'./icons/1.png',
+        icon:`${file_host}/1.png`,
         text:'每日健康提醒',
         url:'#/home'
     },
     {
-        icon:'./icons/2.png',
+        icon:`${file_host}/2.png`,
         text:'我的治病经验',
         url:'#/experience'
     },
     {
-        icon:'./icons/3.png',
+        icon:`${file_host}/3.png`,
         text:'疑难杂症120',
         url:'#/difficult'
     },
     {
-        icon:'./icons/4.png',
+        icon:`${file_host}/4.png`,
         text:'出生缺陷预防',
         url:'#/prevention'
     },
     {
-        icon:'./icons/5.png',
+        icon:`${file_host}/5.png`,
         text:'专家孕哺讲座',
         url:'#/lecture'
     },
     {
-        icon:'./icons/6.png',
+        icon:`${file_host}/6.png`,
         text:'青春婚恋须知',
         url:'#/notes'
     },
     {
-        icon:'./icons/7.png',
+        icon:`${file_host}/7.png`,
         text:'交友大世界',
         url:'#/firends'
     },
     {
-        icon:'./icons/8.png',
+        icon:`${file_host}/8.png`,
         text:'健康送爸妈',
         url:'#/health'
     },
     {
-        icon:'./icons/9.png',
+        icon:`${file_host}/9.png`,
         text:'百行孝居先'
     },
     {
@@ -51,7 +53,7 @@ export default [
         text:''
     },
     {
-        icon:'./icons/10.png',
+        icon:`${file_host}/10.png`,
         text:'我是传播人'
     },
     {

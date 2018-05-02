@@ -31,12 +31,17 @@ export default class MyCard extends Component {
         this.state = {}
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        let {params} = this.props.match
+        let {id} = params
+        this.setState({id})
+    }
 
     render() {
         return <div className="home">
-            <NavBar mode="dark" rightContent={[< Icon key = "1" type = "ellipsis" />]}>健康送爸妈</NavBar>
+            <NavBar mode="dark" leftContent={[< Icon key = "1" type = "left" />]}></NavBar>
             <div className="content">
+                asdasdasd {this.state.id}
             </div>
         </div>
 

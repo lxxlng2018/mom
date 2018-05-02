@@ -126,11 +126,15 @@ export default class Difficult extends Component {
         })
     }
 
+    handleBack = ()=>{
+        window.location.hash = 'home'
+    }
+
 
     render() {
 
         return <div className="home">
-            <NavBar mode="dark" rightContent={[< Icon key = "1" type = "ellipsis" / >]}>疑难杂症120</NavBar>
+            <NavBar mode="dark" leftContent={[< Icon onClick={this.handleBack} key = "1" type = "left" / >]}>疑难杂症120</NavBar>
             <div className="content">
                 <Tabs
                     tabs={[

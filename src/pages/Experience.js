@@ -66,10 +66,14 @@ export default class Experience extends Component {
         })
     }
 
+    handleBack = ()=>{
+        window.location.hash = 'home'
+    }
+
     render() {
 
         return <div className="home">
-            <NavBar mode="dark" rightContent={[< Icon key = "1" type = "ellipsis" / >]}>我的治病经验</NavBar>
+            <NavBar mode="dark" leftContent={[< Icon onClick={this.handleBack} key = "1" type = "left" / >]}>我的治病经验</NavBar>
             <div className="content">
                 <Tabs
                     tabs={[
