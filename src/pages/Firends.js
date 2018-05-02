@@ -104,16 +104,19 @@ export default class Firends extends Component {
         })
     }
 
-    handleMenuTab = (index)=>{
+    handleMenuTab = (index) => {
         switch (index) {
             case 0:
+                window.location.hash = 'firends'
                 break;
             case 1:
-                window.location.href = '#/mycard'
+                window.location.hash = 'mycard'
                 break;
             case 2:
+                window.location.hash = 'myinvite'
                 break;
             case 3:
+                window.location.hash = 'myrinvite'
                 break;
             default:
                 break;
@@ -127,7 +130,7 @@ export default class Firends extends Component {
                 <img style={{width:'100%'}} src={item.thumb} alt={item.name}/>
                 <div className="name">{item.name}</div>
             </div>
-            <div class="peps">
+            <div className="peps">
                 目的：{item.text}
             </div>
         </div>

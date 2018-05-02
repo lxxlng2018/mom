@@ -33,7 +33,7 @@ export default class Home extends Component {
                 console.log(res);
                 // this.setState({     list: })
                 localStorage.setItem('token',res.info)
-                window.location.href = '/home'
+                window.location.hash = 'home'
             })
             .catch(err => {
                 console.log(err);
