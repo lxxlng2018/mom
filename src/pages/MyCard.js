@@ -108,11 +108,15 @@ export default class MyCard extends Component {
                     <Flex className="am-list-item am-input-item am-list-item-middle">
                         <div className="am-input-label" style={{ flex: 1 }}>头像上传</div>
                         <div style={{ flex: 2 }}>
-                            <Button type="primary" size="small" inline style={{ margin: '0 2px' }}>上传本地照片</Button>
+                            <Button type="primary" size="small" inline style={{ margin: '0 2px' }}>上传本地照片
+                            </Button>
                             <Button type="primary" size="small" inline style={{ margin: '0 5px' }}>选择推荐头像</Button>
                         </div>
                     </Flex>
-                    <Picker cols={1} data={(()=>this.handleGetType('jy_yx'))()}>
+                    <Picker cols={1} 
+                        data={(()=>this.handleGetType('jy_yx'))()}
+                        
+                        >
                         <Item >交友目的</Item>
                     </Picker>
                     <Picker cols={1} data={(() => this.handleGetType('age_range'))()}>
