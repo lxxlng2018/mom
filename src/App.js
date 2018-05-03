@@ -12,31 +12,34 @@ import Lecture from "./pages/Lecture";
 import Notes from "./pages/Notes";
 import Firends from "./pages/Firends";
 import MyCard from "./pages/MyCard";
+import Myinvite from "./pages/Myinvite";
+import Myrinvite from "./pages/Myrinvite";
 import Health from "./pages/Health";
 import Fealty from "./pages/Fealty";
 import Spread from "./pages/Spread";
 import "./styles/common.css";
 
 const App = () => (
-    <Router>
-      <Switch>
-        <Route path='/login' exact component={Login}/>
-        <Route path='/regist' exact component={Regist}/>
-        <Route path='/home' exact component={Home}/>
-        <Route path='/experience' exact component={Experience}/>
-        <Route path='/experience/:id' exact component={Article}/>
-        <Route path='/difficult' exact component={Difficult}/>
-        <Route path='/prevention' exact component={Prevention}/>
-        <Route path='/lecture' exact component={Lecture}/>
-        <Route path='/notes' exact component={Notes}/>
-        <Route path='/firends' exact component={Firends}/>
-        <Route path='/mycard' exact component={MyCard}/>
-        <Route path='/health' exact component={Health}/>
-        <Route path='/fealty' exact component={Fealty}/>
-        <Route path='/spread' exact component={Spread}/>
-        <Redirect path='/' to='/home' />
-      </Switch>
-    </Router>
+  <Router>
+    <Switch>
+      <Route path='/login' component={Login} />
+      <Route path='/regist' component={Regist} />
+      <Route path='/home' component={Home} />
+      <Route path='/experience' component={Experience} />
+      <Route path='/difficult' component={Difficult} />
+      <Route path='/prevention' component={Prevention} />
+      <Route path='/lecture' component={Lecture} />
+      <Route path='/notes' component={Notes} />
+      <Route path='/firends' component={Firends} />
+      <Route path='/mycard' component={MyCard} />
+      <Route path='/myinvite' component={Myinvite} />
+      <Route path='/myrinvite' component={Myrinvite} />
+      <Route path='/health' component={Health} />
+      <Route path='/fealty' component={Fealty} />
+      <Route path='/spread' component={Spread} />
+      <Redirect path='/' to='/home' />
+    </Switch>
+  </Router>
 )
 
 export default App;

@@ -15,12 +15,13 @@ export default {
                 }, 'json')
         })
     },
-    getCardList:()=>{
+    getCardList:(con)=>{
         return new Promise((reslove, reject) => {
             $
                 .post(`${host}/Wap/healthuser/friendCardList`, {
                     JKCBSSESSID: localStorage.getItem('token'),
-                    page: 1
+                    page: 1,
+                    ...con
                 }, function (res) {
                     if(res.status){
                         reslove(res.data)

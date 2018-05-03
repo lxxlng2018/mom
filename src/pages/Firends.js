@@ -59,6 +59,13 @@ export default class Firends extends Component {
                 SHENGSHI:null,
                 profession:null
             },
+            checkedId:{
+                jy_yx:null,
+                sex:null,
+                age_range:null,
+                SHENGSHI:null,
+                profession:null
+            },
             cardShow:false,
             card:{},
             modal:false
@@ -71,7 +78,11 @@ export default class Firends extends Component {
     }
 
     handleGetData = ()=>{
-        FirendService.getCardList().then(res=>{
+        const {checkedId} = this.state
+        FirendService.getCardList({
+            ...checkedId
+        }).then(res=>{
+            console.log(res)
             // this.setState({types:res})
         })
     }
@@ -96,29 +107,40 @@ export default class Firends extends Component {
     }
 
     handleCheck = checkedItem=>{
-        let {type,checked} = this.state;
+        let {type,checked,checkedId} = this.state;
         checked[type] = checkedItem
+        checkedId[type] = checkedItem.id 
         this.setState({
             checked,
             modal:false
+        },()=>{
+            this.handleGetData()
         })
     }
 
-    handleMenuTab = (index)=>{
+    handleMenuTab = (index) => {
         switch (index) {
             case 0:
+                window.location.hash = 'firends'
                 break;
             case 1:
-                window.location.href = '#/mycard'
+                window.location.hash = 'mycard'
                 break;
             case 2:
+                window.location.hash = 'myinvite'
                 break;
             case 3:
+                window.location.hash = 'myrinvite'
                 break;
             default:
                 break;
         }
     }
+
+    handleBack = ()=>{
+        window.location.hash = 'home'
+    }
+
 
     render() {
         const {checked,type} = this.state
@@ -133,7 +155,7 @@ export default class Firends extends Component {
         </div>
 
         return <div className="home">
-            <NavBar mode="dark" rightContent={[< Icon key="1" type="ellipsis" />]}>交友大世界</NavBar>
+            <NavBar mode="dark" leftContent={[< Icon onClick={this.handleBack} key="1" type="left" />]}>交友大世界</NavBar>
             <div className="content">
                 <Tabs
                     tabs={[
