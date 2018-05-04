@@ -76,6 +76,10 @@ export default class MyCard extends Component {
         window.location.hash = 'home'
     }
 
+    handleField = (field,val)=>{
+
+    }
+
 
     render() {
         return <div className="home">
@@ -108,30 +112,39 @@ export default class MyCard extends Component {
                     <Flex className="am-list-item am-input-item am-list-item-middle">
                         <div className="am-input-label" style={{ flex: 1 }}>头像上传</div>
                         <div style={{ flex: 2 }}>
-                            <Button type="primary" size="small" inline style={{ margin: '0 2px' }}>上传本地照片
-                            </Button>
+                            <Button type="primary" size="small" inline style={{ margin: '0 2px' }}>上传本地照片</Button>
                             <Button type="primary" size="small" inline style={{ margin: '0 5px' }}>选择推荐头像</Button>
                         </div>
                     </Flex>
                     <Picker cols={1} 
                         data={(()=>this.handleGetType('jy_yx'))()}
-                        
+                        onOk={(val)=>this.handleField('jx_yx',val)}
                         >
                         <Item >交友目的</Item>
                     </Picker>
-                    <Picker cols={1} data={(() => this.handleGetType('age_range'))()}>
+                    <Picker cols={1} data={(() => this.handleGetType('age_range'))()}
+                        onOk={(val)=>this.handleField('age_range',val)}
+                    >
                         <Item >年龄段</Item>
                     </Picker>
-                    <Picker cols={1} data={(() => this.handleGetType('sex'))()}>
+                    <Picker cols={1} data={(() => this.handleGetType('sex'))()}
+                        onOk={(val)=>this.handleField('sex',val)}
+                    >
                         <Item >性别</Item>
                     </Picker>
-                    <Picker cols={1} data={(() => this.handleGetType('SHENGSHI'))()}>
+                    <Picker cols={1} data={(() => this.handleGetType('SHENGSHI'))()}
+                        onOk={(val)=>this.handleField('province',val)}
+                    >
                         <Item >地区</Item>
                     </Picker>
-                    <Picker cols={1} data={(() => this.handleGetType('profession'))()}>
+                    <Picker cols={1} data={(() => this.handleGetType('profession'))()}
+                        onOk={(val)=>this.handleField('profession',val)}
+                    >
                         <Item >行业</Item>
                     </Picker>
-                    <Picker cols={1} data={(() => this.handleGetType('character'))()}>
+                    <Picker cols={1} data={(() => this.handleGetType('character'))()}
+                        onOk={(val)=>this.handleField('character',val)}
+                    >
                         <Item >爱好</Item>
                     </Picker>
                     <InputItem
@@ -139,7 +152,9 @@ export default class MyCard extends Component {
                         placeholder=""
                         clear
                         moneyKeyboardAlign="left">网名</InputItem>
-                    <Picker cols={1} data={(() => this.handleGetType('degree'))()}>
+                    <Picker cols={1} data={(() => this.handleGetType('degree'))()}
+                        onOk={(val)=>this.handleField('degree',val)}
+                    >
                         <Item >学历</Item>
                     </Picker>
                     <Picker cols={1} data={(() => this.handleGetType('character'))()}>
