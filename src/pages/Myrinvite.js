@@ -66,13 +66,12 @@ export default class Myrinvite extends Component {
     }
 
     componentDidMount() {
-        this.handleGetTypes()
-        this.handleGetData()
     }
 
     handleGetData = ()=>{
-        FirendService.getCardList().then(res=>{
+        FirendService.myInvitated().then(res=>{
             // this.setState({types:res})
+            console.log(res);
         })
     }
 

@@ -92,6 +92,14 @@ export default class MyCard extends Component {
         })
     }
 
+
+    submit = ()=>{
+        let {data} = this.state
+        FirendService.add(data).then(res=>{
+            console.log(res);
+        })
+    }
+
     render() {
         return <div className="home">
             <NavBar mode="dark" leftContent={[< Icon key="1" onClick={this.handleBack} type="left" />]}>我的交友名片</NavBar>
@@ -123,7 +131,7 @@ export default class MyCard extends Component {
                     <Flex className="am-list-item am-input-item am-list-item-middle">
                         <div className="am-input-label" style={{ flex: 1 }}>头像上传</div>
                         <div style={{ flex: 2 }}>
-                            <UploadImage name="imgFile" uploadLink="http://www.669669669.com/kindedit/php/upload_jsone.php" />
+                            <UploadImage name="imgFile" uploadLink="http://121.42.46.178:3440/" />
                             <Button type="primary" size="small" inline style={{ margin: '0 2px' }}>上传本地照片</Button>
                             <Button type="primary" size="small" inline style={{ margin: '0 5px' }}>选择推荐头像</Button>
                         </div>
@@ -188,7 +196,7 @@ export default class MyCard extends Component {
                         clear
                         onChange={(e)=>this.handleField('weixin',e)}
                         moneyKeyboardAlign="left">微信</InputItem>
-                    <Item><Button type="primary">提交</Button></Item>
+                    <Item><Button onClick={this.submit} type="primary">提交</Button></Item>
                 </List>
             </div>
         </div>

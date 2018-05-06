@@ -66,6 +66,9 @@ export default class Myinvite extends Component {
     }
 
     componentDidMount() {
+        FirendService.myInvitate().then(res=>{
+            console.log(res);
+        })
     }
 
 
