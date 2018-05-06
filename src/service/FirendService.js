@@ -69,5 +69,23 @@ export default {
                     }
                 }, 'json')
         })
+    },
+    /**
+     * 我的传播朋友
+     * 
+     * @param {any} con 
+     */
+    getMyFriends:con=>{
+        return new Promise((reslove, rejcect) => {
+            $
+                .post(`${host}/Wap/healthuser/myFriends`, {
+                    JKCBSSESSID: localStorage.getItem('token'),
+                    ...con
+                }, function (res) {
+                    if (res.status) {
+                        reslove(res.data)
+                    }
+                }, 'json')
+        })
     }
 }

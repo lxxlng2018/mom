@@ -26,25 +26,24 @@ import {
 
 const Item = List.Item
 
-export default class Spread extends Component {
+export default class Share extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            menu2
         }
     }
 
     componentDidMount() { }
 
+    handleBack = () => {
+        window.location.hash = 'spread'
+    }
+
     render() {
         return <div className="home">
-            <NavBar mode="dark" rightContent={[< Icon key="1" type="ellipsis" />]}>我的交友名片</NavBar>
-            <div className="content">
-                <Grid data={this.state.menu2} columnNum={3} hasLine={false} activeStyle={false} />
-                <Flex className="base-center">
-                    <div style={{ flex: 2 }}>我的传播朋友</div>
-                    <div style={{ flex: 1 }}>共21位</div>
-                </Flex>
+            <NavBar mode="dark" leftContent={[< Icon onClick={this.handleBack} key="1" type="left" />]}>我要传播</NavBar>
+            <div className="content" style={{padding:20}}>
+                <div className="social-share" data-disabled="google" data-description="Share.js - 一键分享到微博，QQ空间，腾讯微博，人人，豆瓣"></div>
             </div>
         </div>
 

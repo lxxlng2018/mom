@@ -28,12 +28,11 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-        UserService.getUserInfo().then(({info})=>{
+        UserService.getUserInfo().then((info)=>{
             this.setState({
                 userInfo:info
             })
             return UserService.getEveryDayNotice().then(res=>{
-                console.log(res)
                 this.setState({
                     list:res.data.result
                 })
@@ -45,9 +44,14 @@ export default class Home extends Component {
     }
 
     handleUrl(e){
-        console.log(e)
         if(e.url){
             window.location.hash = e.url
+        }
+    }
+
+    handleRead = id=>{
+        if(id){
+            window.location.hash = `read/${id}`
         }
     }
 
@@ -72,7 +76,7 @@ export default class Home extends Component {
                 <div>
                     <List renderHeader={() => <div className="block_title">每日健康提醒</div>}>
                         {
-                            this.state.list.map(item=><Item key={item.id} extra={item.add_time}>{item.title}</Item>)
+                            this.state.list.map(item => <Item onClick={() => this.handleRead(item.id)} key={item.id} extra={item.add_time}>{item.title}</Item>)
                         }
                     </List>
                 </div>

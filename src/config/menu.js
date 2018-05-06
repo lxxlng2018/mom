@@ -54,7 +54,8 @@ export default [
     },
     {
         icon:`${file_host}/10.png`,
-        text:'我是传播人'
+        text:'我是传播人',
+        url:'spread'
     },
     {
         icon:'',

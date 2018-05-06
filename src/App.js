@@ -17,8 +17,12 @@ import Myrinvite from "./pages/Myrinvite";
 import Health from "./pages/Health";
 import Fealty from "./pages/Fealty";
 import Spread from "./pages/Spread";
+import Share from "./pages/Share";
+import HeadShort from "./pages/HeadShort";
 import "./styles/common.css";
-
+window.onerror = err=>{
+  console.log('qwe',err);
+}
 const App = () => (
   <Router>
     <Switch>
@@ -37,7 +41,9 @@ const App = () => (
       <Route path='/health' component={Health} />
       <Route path='/fealty' component={Fealty} />
       <Route path='/spread' component={Spread} />
-      <Redirect path='/' to='/home' />
+      <Route path='/share' component={Share} />
+      <Route path='/headshort' component={HeadShort} />
+      <Route path='/read/:id' component={Article} />
     </Switch>
   </Router>
 )

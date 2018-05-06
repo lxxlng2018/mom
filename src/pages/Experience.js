@@ -15,7 +15,8 @@ import {
     Popover,
     TextareaItem,
     InputItem,
-    Toast
+    Toast,
+    Modal
 } from 'antd-mobile';
 
 import ExpriceService from '../service/ExpriceService'
@@ -27,14 +28,30 @@ export default class Experience extends Component {
         super(props)
         this.state = {
             list:[],
+            types:[],
+            modal:false,
             btnLoading:false
         }
     }
 
     componentDidMount() {
-        ExpriceService.getList().then(res=>{
+        this.handleGetData()
+        this.handleGetTypes()
+    }
+
+    handleGetTypes = ()=>{
+        ExpriceService.getTypes().then(res=>{
+            console.log(res);
             this.setState({
-                list:res.result
+                types:res
+            })
+        })
+    }
+
+    handleGetData = ()=>{
+        ExpriceService.getList().then(res => {
+            this.setState({
+                list: res.result
             })
         })
     }
@@ -70,6 +87,28 @@ export default class Experience extends Component {
         window.location.hash = 'home'
     }
 
+    handleSearch = ()=>{
+        console.log(1111);
+    }
+
+    handleClose = ()=>{
+        this.setState({
+            modal:false
+        })
+    }
+
+    handleShow = ()=>{
+        this.setState({
+            modal:true
+        })
+    }
+
+    handleRead = id => {
+        if (id) {
+            window.location.hash = `read/${id}`
+        }
+    }
+
     render() {
 
         return <div className="home">
@@ -98,6 +137,7 @@ export default class Experience extends Component {
                             width: '100%'
                         }}>
                             <Flex.Item
+                                onClick={() => this.handleShow()}
                                 style={{
                                 flex: 2
                             }}>
@@ -118,7 +158,7 @@ export default class Experience extends Component {
                                 style={{
                                 flex: 6
                             }}>
-                                <SearchBar placeholder="搜索" maxLength={8}/>
+                                <SearchBar onSubmit={()=>this.handleSearch()} placeholder="搜索" maxLength={8}/>
                             </Flex.Item>
                         </Flex>
                         <div
@@ -130,7 +170,7 @@ export default class Experience extends Component {
                                     .state
                                     .list
                                     .map((item, index) => {
-                                        return <Item key={item.id} extra={item.add_time}>{item.title}</Item>
+                                        return <Item key={item.id} onClick={() => this.handleRead(item.id)} extra={item.add_time}>{item.title}</Item>
                                     })
 }
                             </List>
@@ -161,6 +201,21 @@ export default class Experience extends Component {
                     </div>
                 </Tabs>
             </div>
+            <Modal
+                popup
+                visible={this.state.modal}
+                onClose={()=>this.handleClose()}
+                maskClosable={true}
+                animationType="slide-up"
+            >
+                <div style={{height:'300px',overflow:'scroll'}}>
+                    <List renderHeader={() => <div>分类</div>} className="popup-list">
+                        {this.state.types.map((i, index) => (
+                            <List.Item key={index}>{i.name}</List.Item>
+                        ))}
+                    </List>
+                </div>
+            </Modal>
         </div>
 
     }
