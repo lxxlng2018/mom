@@ -258,3 +258,41 @@ input:active ~ .box-icon {
   height: 100%;
   object-fit: cover;
 }
+
+
+.home .top_index_header {
+}
+
+.home .top_index_header .logo{
+    width:120px;
+}
+
+.top_index_header .logo img {
+    max-width: 100%;
+}
+
+.top_index_header .time {
+    padding:0 10px;
+    font-size: 12px;
+}
+
+.top_index_header .buttons .am-button{
+    margin-right: 2px;
+}
+
+.home-menu{
+    border-top: 3px #f00 solid;
+    background: #59d6ac;
+}
+
+.home-menu a{
+    display: inline-block;
+    width:33%;
+    text-align: center;
+    padding:8px 0;
+    color:#fff;
+}
+
+.home-carouel img{
+    width:100%;
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import {HashRouter as Router, Route, Switch,Redirect} from 'react-router-dom';
 import Layout from "./components/Layout";
+import Index from "./pages/Index";
 import Home from "./pages/Home";
 import Regist from "./pages/Regist";
 import Login from "./pages/Login";
@@ -44,6 +45,7 @@ const App = () => (
       <Route path='/share' component={Share} />
       <Route path='/headshort' component={HeadShort} />
       <Route path='/read/:id' component={Article} />
+      <Route path='/' component={Index} />
     </Switch>
   </Router>
 )
