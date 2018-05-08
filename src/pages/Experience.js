@@ -49,7 +49,12 @@ export default class Experience extends Component {
     }
 
     handleGetData = ()=>{
-        ExpriceService.getList().then(res => {
+        const { small_type,page,title} = this.state
+        ExpriceService.getList({
+            small_type,
+            title,
+            page
+        }).then(res => {
             this.setState({
                 list: res.result
             })

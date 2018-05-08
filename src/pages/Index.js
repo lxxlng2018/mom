@@ -73,15 +73,15 @@ export default class Index extends Component {
             </Flex>
             <div className="home-menu">
                 <Flex wrap="wrap">
-                    <a href="">每日健康提醒</a>
-                    <a href="">百行孝居先</a>
-                    <a href="">我的治病经验</a>
-                    <a href="">出生缺陷预防</a>
-                    <a href="">健康送爸妈</a>
-                    <a href="">专家孕哺讲座</a>
-                    <a href="">青春婚恋须知</a>
-                    <a href="">交友大世界</a>
-                    <a href="">疑难杂症120</a>
+                    <a href="#/home">每日健康提醒</a>
+                    <a href="#/">百行孝居先</a>
+                    <a href="#/experience">我的治病经验</a>
+                    <a href="#/prevention">出生缺陷预防</a>
+                    <a href="#/health">健康送爸妈</a>
+                    <a href="#/lecture">专家孕哺讲座</a>
+                    <a href="#/notes">青春婚恋须知</a>
+                    <a href="#/firends">交友大世界</a>
+                    <a href="#/difficult">疑难杂症120</a>
                 </Flex>
             </div>
             <Carousel className="home-carouel">
