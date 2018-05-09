@@ -56,7 +56,7 @@ export default class Spread extends Component {
         FirendService.getMyFriends().then(res => {
             return FirendService.getMyFriends({ type: 2 }).then(firendsNumb => {
                 this.setState({
-                    list: res,
+                    list: res ||[],
                     firendsNumb
                 })
             })
@@ -83,7 +83,8 @@ export default class Spread extends Component {
     handleGetUserInfo = () => {
         UserService.getUserInfo().then(userinfo => {
             this.setState({
-                userinfo
+                userinfo,
+                my_alipay:userinfo.my_alipay
             })
         })
     }

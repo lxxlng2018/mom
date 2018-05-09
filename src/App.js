@@ -20,10 +20,8 @@ import Fealty from "./pages/Fealty";
 import Spread from "./pages/Spread";
 import Share from "./pages/Share";
 import HeadShort from "./pages/HeadShort";
+import PublicVedio from "./pages/PublicVedio";
 import "./styles/common.css";
-window.onerror = err=>{
-  console.log('qwe',err);
-}
 const App = () => (
   <Router>
     <Switch>
@@ -45,6 +43,7 @@ const App = () => (
       <Route path='/share' component={Share} />
       <Route path='/headshort' component={HeadShort} />
       <Route path='/read/:id' component={Article} />
+      <Route path='/public_vedio' component={PublicVedio} />
       <Route path='/' component={Index} />
     </Switch>
   </Router>

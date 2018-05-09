@@ -29,8 +29,11 @@ export default class Experience extends Component {
         this.state = {
             list:[],
             types:[],
+            small_type:null,
+            title:null,
             modal:false,
-            btnLoading:false
+            btnLoading:false,
+            page:1
         }
     }
 
@@ -41,9 +44,8 @@ export default class Experience extends Component {
 
     handleGetTypes = ()=>{
         ExpriceService.getTypes().then(res=>{
-            console.log(res);
             this.setState({
-                types:res
+                types:res||[]
             })
         })
     }
@@ -56,7 +58,7 @@ export default class Experience extends Component {
             page
         }).then(res => {
             this.setState({
-                list: res.result
+                list: res.result||[]
             })
         })
     }
@@ -82,18 +84,25 @@ export default class Experience extends Component {
     }
 
     handleValue(key,value){
-        console.log()
         this.setState({
             [key]:value
         })
     }
 
     handleBack = ()=>{
-        window.location.hash = 'home'
+        window.location.href = '#/home'
     }
 
     handleSearch = ()=>{
-        console.log(1111);
+        this.handleGetData()
+    }
+
+    handleCancel = ()=>{
+        this.setState({
+            title:null
+        },()=>{
+            this.handleGetData()
+        })
     }
 
     handleClose = ()=>{
@@ -110,8 +119,20 @@ export default class Experience extends Component {
 
     handleRead = id => {
         if (id) {
-            window.location.hash = `read/${id}`
+            window.location.href = `#/read/${id}`
         }
+    }
+
+    handleChoose = small_type=>{
+        this.setState({
+            small_type
+        })
+    }
+
+    handleTitle = title=>{
+        this.setState({
+            title
+        })
     }
 
     render() {
@@ -163,7 +184,7 @@ export default class Experience extends Component {
                                 style={{
                                 flex: 6
                             }}>
-                                <SearchBar onSubmit={()=>this.handleSearch()} placeholder="搜索" maxLength={8}/>
+                                <SearchBar onSubmit={this.handleSearch} onCancel={this.handleCancel} value={this.state.title} onChange={(title)=>this.handleTitle(title)} placeholder="搜索" maxLength={8}/>
                             </Flex.Item>
                         </Flex>
                         <div
@@ -216,7 +237,7 @@ export default class Experience extends Component {
                 <div style={{height:'300px',overflow:'scroll'}}>
                     <List renderHeader={() => <div>分类</div>} className="popup-list">
                         {this.state.types.map((i, index) => (
-                            <List.Item key={index}>{i.name}</List.Item>
+                            <List.Item onClick={()=>this.handleChoose(i.id)} key={index}>{i.name}</List.Item>
                         ))}
                     </List>
                 </div>

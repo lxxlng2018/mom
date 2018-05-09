@@ -13,10 +13,17 @@ export default {
             }, 'json')
         })
     },
-    getList: () => {
+    getList: ({
+        title,
+        small_type,
+        page
+    }) => {
         return new Promise((reslove, rejcet) => {
             $.post(`${host}/wap/healthuser/myzbjy`, {
-                JKCBSSESSID: localStorage.getItem('token')
+                JKCBSSESSID: localStorage.getItem('token'),
+                small_type,
+                title,
+                page
             },res=>{
                 if(res.status){
                     reslove(res.data)

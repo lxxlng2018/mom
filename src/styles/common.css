@@ -61,6 +61,17 @@ body {
     margin-left: -20px;
 }
 
+.home .block_title_l {
+    display: block;
+    background: #59d6ac;
+    color: #fff;
+    width:100%;
+    font-size: 20px;
+    text-align: center;
+    padding: 10px;
+    margin-left: -20px;
+}
+
 .am-button-borderfix.am-button-icon {
     display: inline-flex;
 }
@@ -77,6 +88,7 @@ body {
 
 .grid-user {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .user_item {
@@ -295,4 +307,40 @@ input:active ~ .box-icon {
 
 .home-carouel img{
     width:100%;
+}
+
+.yf-test{
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    border-top: 2px #f00 solid;
+    clear: both;
+    margin-top: 50px;
+    line-height: 60px;
+}
+
+.qusetuo {
+    border: 1px #f5eece solid;
+    background: #FFF9DB;
+    margin: -12px 0 8px;
+    position: relative;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.space-carousel {
+  padding: 16px;
+  background: #DEF1E5;
+  overflow: hidden;
+}
+
+.home .head {
+    width:80px;
+}
+
+.a-title {
+    text-align: center;
+    padding: 20px;
+    font-size: 20px;
+    border-bottom:1px #ddd solid;
 }

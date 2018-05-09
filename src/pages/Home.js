@@ -45,7 +45,7 @@ export default class Home extends Component {
 
     handleUrl(e){
         if(e.url){
-            window.location.hash = e.url
+            window.location.href = e.url
         }
     }
 

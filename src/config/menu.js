@@ -46,7 +46,8 @@ export default [
     },
     {
         icon:`${file_host}/9.png`,
-        text:'百行孝居先'
+        text:'百行孝居先',
+        url:'#/health'
     },
     {
         icon:'',
@@ -55,7 +56,7 @@ export default [
     {
         icon:`${file_host}/10.png`,
         text:'我是传播人',
-        url:'spread'
+        url:'#/spread'
     },
     {
         icon:'',
