@@ -16,13 +16,14 @@ import {
     TextareaItem,
     InputItem,
     Toast,
-    Modal
+    Modal,
+    Radio
 } from 'antd-mobile';
 
 import ExpriceService from '../service/ExpriceService'
 
 const Item = List.Item
-
+const RadioItem = Radio.RadioItem
 export default class Experience extends Component {
     constructor(props) {
         super(props)
@@ -30,7 +31,8 @@ export default class Experience extends Component {
             list:[],
             types:[],
             small_type:null,
-            title:null,
+            chooseName:'选择分类',
+            title:``,
             modal:false,
             btnLoading:false,
             page:1
@@ -99,7 +101,7 @@ export default class Experience extends Component {
 
     handleCancel = ()=>{
         this.setState({
-            title:null
+            title:``
         },()=>{
             this.handleGetData()
         })
@@ -123,9 +125,13 @@ export default class Experience extends Component {
         }
     }
 
-    handleChoose = small_type=>{
+    handleChoose = (small_type,chooseName)=>{
         this.setState({
-            small_type
+            small_type,
+            chooseName
+        },()=>{
+            this.handleClose()
+            this.handleGetData()
         })
     }
 
@@ -176,7 +182,7 @@ export default class Experience extends Component {
                                     alignItems: 'center',
                                     border: '1px #ddd solid'
                                 }}>
-                                    <div>选择分类</div>
+                                    <div className="chooseName">{this.state.chooseName}</div>
                                     <Icon type="down"/>
                                 </div>
                             </Flex.Item>
@@ -236,8 +242,9 @@ export default class Experience extends Component {
             >
                 <div style={{height:'300px',overflow:'scroll'}}>
                     <List renderHeader={() => <div>分类</div>} className="popup-list">
+                        <RadioItem onChange={() => this.handleChoose(null,'选择分类')} checked={this.state.small_type == null}>全部</RadioItem>
                         {this.state.types.map((i, index) => (
-                            <List.Item onClick={()=>this.handleChoose(i.id)} key={index}>{i.name}</List.Item>
+                            <RadioItem checked={this.state.small_type === i.id} onChange={() => this.handleChoose(i.id,i.name)} key={index}>{i.name}</RadioItem>
                         ))}
                     </List>
                 </div>

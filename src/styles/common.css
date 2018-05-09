@@ -344,3 +344,13 @@ input:active ~ .box-icon {
     font-size: 20px;
     border-bottom:1px #ddd solid;
 }
+
+.chooseName {
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    width: 58px;
+    height: 22px;
+    word-break: keep-all;
+    line-height: 23px;
+}
