@@ -34,21 +34,6 @@ export default class Myinvite extends Component {
         super(props)
         this.state = {
             users:[
-                {
-                    thumb:'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1781615267,834481015&fm=27&gp=0.jpg',
-                    name:'网名A',
-                    text:'asdasdasd'
-                },
-                {
-                    thumb:'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1781615267,834481015&fm=27&gp=0.jpg',
-                    name:'网名B',
-                    text:'asdasdasd'
-                },
-                {
-                    thumb:'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1781615267,834481015&fm=27&gp=0.jpg',
-                    name:'网名C',
-                    text:'asdasdasd'
-                },
             ],
             types:[],
             type:"age_range",
@@ -68,6 +53,9 @@ export default class Myinvite extends Component {
     componentDidMount() {
         FirendService.myInvitate().then(res=>{
             console.log(res);
+            this.setState({
+                users:res.result||[]
+            })
         })
     }
 
@@ -112,16 +100,16 @@ export default class Myinvite extends Component {
 
     render() {
         const {checked,type} = this.state
-        const gridItem = (item,index)=><div key={index} className="user_item">
+        const gridItem = (item, index) => <div key={index} className="user_item">
             <div className="head">
-                <img style={{width:'100%'}} src={item.thumb} alt={item.name}/>
-                <div className="name">{item.name}</div>
+                <img style={{ width: '100%' }} src={item.headshot} alt={item.id} />
+                <div className="name">{item.id}</div>
             </div>
             <div className="peps">
-                交友目的：奥术大师大所大所多
+                目的：{item.jy_yx}
             </div>
             <div className="peps">
-                <Tag style={{color:'#fff',background:'#f20'}}>待同意</Tag>
+                <Tag style={{ color: '#fff', background: '#f20' }}>待同意</Tag>
             </div>
         </div>
 

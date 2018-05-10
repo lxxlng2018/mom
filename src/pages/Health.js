@@ -42,9 +42,13 @@ export default class MyCard extends Component {
         HealthService.getList().then(res=>{
             const {result} = res
             this.setState({
-                list:result
+                list:result||[]
             })
         })
+    }
+
+    handleUrl = ()=>{
+        window.location.href = '#/share'
     }
 
     render() {
@@ -63,9 +67,10 @@ export default class MyCard extends Component {
                                     <div className="doc-thumb">
                                         <img src="./icons/1.png" alt=""/>
                                     </div>
-                                    <div className="tips">{item.title}</div>
-                                  <div className="share-btn"><a href="#/share" className="am-button am-button-primary am-button-small am-button-inline" inline>送爸妈</a></div>
+                                  <div className="tips">请您关注今天的中老年疾病防治专家提示</div>
+                                  <div className="share-btn"><a onClick={this.handleUrl} className="am-button am-button-primary am-button-small am-button-inline" inline>送爸妈</a></div>
                                 </div>
+                              <div className="buttom-title">今日提示：{item.title} </div>
                             </div>
                         })
                     }

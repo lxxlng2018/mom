@@ -354,3 +354,8 @@ input:active ~ .box-icon {
     word-break: keep-all;
     line-height: 23px;
 }
+
+.buttom-title{
+    text-align: center;
+    padding:5px;
+}

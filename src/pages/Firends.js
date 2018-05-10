@@ -34,21 +34,6 @@ export default class Firends extends Component {
         super(props)
         this.state = {
             users:[
-                {
-                    thumb:'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1781615267,834481015&fm=27&gp=0.jpg',
-                    name:'网名A',
-                    text:'asdasdasd'
-                },
-                {
-                    thumb:'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1781615267,834481015&fm=27&gp=0.jpg',
-                    name:'网名B',
-                    text:'asdasdasd'
-                },
-                {
-                    thumb:'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1781615267,834481015&fm=27&gp=0.jpg',
-                    name:'网名C',
-                    text:'asdasdasd'
-                },
             ],
             types:[],
             type:"age_range",
@@ -82,14 +67,13 @@ export default class Firends extends Component {
         FirendService.getCardList({
             ...checkedId
         }).then(res=>{
-            console.log(res)
-            // this.setState({types:res})
+            this.setState({ users:res.result||[]})
         })
     }
 
     handleGetTypes = ()=>{
         FirendService.getTypes().then(res=>{
-            this.setState({types:res})
+            this.setState({types:res||[]})
         })
     }
 
@@ -121,16 +105,16 @@ export default class Firends extends Component {
     handleMenuTab = (index) => {
         switch (index) {
             case 0:
-                window.location.hash = 'firends'
+                window.location.href = '#/firends'
                 break;
             case 1:
-                window.location.hash = 'mycard'
+                window.location.href = '#/mycard'
                 break;
             case 2:
-                window.location.hash = 'myinvite'
+                window.location.href = '#/myinvite'
                 break;
             case 3:
-                window.location.hash = 'myrinvite'
+                window.location.href = '#/myrinvite'
                 break;
             default:
                 break;
@@ -138,19 +122,24 @@ export default class Firends extends Component {
     }
 
     handleBack = ()=>{
-        window.location.hash = 'home'
+        window.location.href = '#/home'
+    }
+
+    componentDidCatch(error, info) {
+        console.log(error,info);
     }
 
 
     render() {
+        console.log(this.state.types);
         const {checked,type} = this.state
         const gridItem = (item,index)=><div key={index} className="user_item">
             <div className="head">
-                <img style={{width:'100%'}} src={item.thumb} alt={item.name}/>
-                <div className="name">{item.name}</div>
+                <img style={{width:'100%'}} src={item.headshot} alt={item.id}/>
+                <div className="name">{item.id}</div>
             </div>
             <div className="peps">
-                目的：{item.text}
+                目的：{item.jy_yx}
             </div>
         </div>
 

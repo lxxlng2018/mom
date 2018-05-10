@@ -2,20 +2,21 @@ import $ from 'jquery'
 import base from '../config/base'
 const host = base.host
 export default {
-    getTypes:()=>{
+    getTypes: () => {
         return new Promise((reslove, reject) => {
             $
                 .get(`${host}/Wap/healthuser/friendCardList`, {
                     JKCBSSESSID: localStorage.getItem('token'),
                     page: 1
                 }, function (res) {
-                    if(res.status){
+                    if (res.status) {
                         reslove(res.data)
                     }
                 }, 'json')
+
         })
     },
-    getCardList:(con)=>{
+    getCardList: (con) => {
         return new Promise((reslove, reject) => {
             $
                 .post(`${host}/Wap/healthuser/friendCardList`, {
@@ -23,13 +24,13 @@ export default {
                     page: 1,
                     ...con
                 }, function (res) {
-                    if(res.status){
+                    if (res.status) {
                         reslove(res.data)
                     }
                 }, 'json')
         })
     },
-    myInvitate:con=>{
+    myInvitate: con => {
         return new Promise((reslove, reject) => {
             $
                 .post(`${host}/Wap/healthuser/myInvitate`, {
@@ -57,8 +58,21 @@ export default {
                 }, 'json')
         })
     },
-    add:data=>{
-        return new Promise((reslove,rejcect)=>{
+    getMyCard: () => {
+        return new Promise((reslove, reject) => {
+            $
+                .post(`${host}/Wap/healthuser/`, {
+                    JKCBSSESSID: localStorage.getItem('token'),
+                }, function (res) {
+                    if (res.status) {
+                        reslove(res.data)
+                    }
+                }, 'json')
+        })
+    }
+    ,
+    add: data => {
+        return new Promise((reslove, rejcect) => {
             $
                 .post(`${host}/Wap/healthuser/addCard`, {
                     JKCBSSESSID: localStorage.getItem('token'),
@@ -75,7 +89,7 @@ export default {
      * 
      * @param {any} con 
      */
-    getMyFriends:con=>{
+    getMyFriends: con => {
         return new Promise((reslove, rejcect) => {
             $
                 .post(`${host}/Wap/healthuser/myFriends`, {
