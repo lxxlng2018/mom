@@ -1,4 +1,4 @@
-import $ from 'jquery'
+import $ from './httpService'
 import base from '../config/base'
 const host = base.host
 export default {
@@ -6,7 +6,6 @@ export default {
         return new Promise((reslove, reject) => {
             $
                 .get(`${host}/Wap/healthuser/friendCardList`, {
-                    JKCBSSESSID: localStorage.getItem('token'),
                     page: 1
                 }, function (res) {
                     if (res.status) {
@@ -20,7 +19,6 @@ export default {
         return new Promise((reslove, reject) => {
             $
                 .post(`${host}/Wap/healthuser/friendCardList`, {
-                    JKCBSSESSID: localStorage.getItem('token'),
                     page: 1,
                     ...con
                 }, function (res) {
@@ -34,7 +32,6 @@ export default {
         return new Promise((reslove, reject) => {
             $
                 .post(`${host}/Wap/healthuser/myInvitate`, {
-                    JKCBSSESSID: localStorage.getItem('token'),
                     page: 1,
                     ...con
                 }, function (res) {
@@ -48,7 +45,6 @@ export default {
         return new Promise((reslove, reject) => {
             $
                 .post(`${host}/Wap/healthuser/myInvitated`, {
-                    JKCBSSESSID: localStorage.getItem('token'),
                     page: 1,
                     ...con
                 }, function (res) {
@@ -62,7 +58,6 @@ export default {
         return new Promise((reslove, reject) => {
             $
                 .post(`${host}/Wap/healthuser/`, {
-                    JKCBSSESSID: localStorage.getItem('token'),
                 }, function (res) {
                     if (res.status) {
                         reslove(res.data)
@@ -75,8 +70,19 @@ export default {
         return new Promise((reslove, rejcect) => {
             $
                 .post(`${host}/Wap/healthuser/addCard`, {
-                    JKCBSSESSID: localStorage.getItem('token'),
                     ...data
+                }, function (res) {
+                    if (res.status) {
+                        reslove(res.data)
+                    }
+                }, 'json')
+        })
+    },
+    getMyFriendsNumb: con => {
+        return new Promise((reslove, rejcect) => {
+            $
+                .get(`${host}/Wap/healthuser/myFriends`, {
+                    ...con
                 }, function (res) {
                     if (res.status) {
                         reslove(res.data)
@@ -93,7 +99,6 @@ export default {
         return new Promise((reslove, rejcect) => {
             $
                 .post(`${host}/Wap/healthuser/myFriends`, {
-                    JKCBSSESSID: localStorage.getItem('token'),
                     ...con
                 }, function (res) {
                     if (res.status) {

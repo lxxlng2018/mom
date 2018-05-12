@@ -1,4 +1,4 @@
-import $ from 'jquery';
+import $ from './httpService';
 import base from '../config/base'
 const {host} = base;
 export default {
@@ -6,7 +6,6 @@ export default {
         //获取所有的谢谢列表
         return new Promise((reslove, rejcet) => {
             $.post(`${host}/wap/healthuser/djlbz`, {
-                JKCBSSESSID: localStorage.getItem('token'),
                 page: 1
             }, res => {
                 if (res.status) {
@@ -19,7 +18,6 @@ export default {
         //获取我自己的谢谢列表
         return new Promise((reslove, rejcet) => {
             $.post(`${host}/wap/healthuser/xxbz`, {
-                JKCBSSESSID: localStorage.getItem('token'),
                 page: 1
             }, res => {
                 if (res.status) {
@@ -32,7 +30,6 @@ export default {
         //获取助人有乐列表
         return new Promise((reslove, rejcet) => {
             $.post(`${host}/wap/healthuser/zryl`, {
-                JKCBSSESSID: localStorage.getItem('token'),
                 page: 1
             }, res => {
                 if (res.status) {
@@ -44,9 +41,28 @@ export default {
     add : ({title, content}) => {
         return new Promise((reslove, rejcet) => {
             $.post(`${host}/wap/healthuser/addDjlbz`, {
-                JKCBSSESSID: localStorage.getItem('token'),
                 title,
                 content
+            }, res => {
+                if (res.status) {
+                    reslove(res)
+                }
+            }, 'json')
+        })
+    },
+    /**
+     * @name 互答帮助内容
+     */
+    addXX:({
+        title,
+        content,
+        replay_id
+    })=>{
+        return new Promise((reslove, rejcet) => {
+            $.post(`${host}/wap/healthuser/addxxbz`, {
+                title,
+                content,
+                replay_id
             }, res => {
                 if (res.status) {
                     reslove(res)

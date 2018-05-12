@@ -34,7 +34,7 @@ export default class Home extends Component {
             })
             return UserService.getEveryDayNotice().then(res=>{
                 this.setState({
-                    list:res.data.result
+                    list:res.data.result || []
                 })
             })
         })

@@ -6,6 +6,7 @@ import moment from 'moment';
 import menu2 from '../config/menu2'
 import base from '../config/base'
 import $ from 'jquery'
+import NativeShare from 'nativeshare'
 import {
     Flex,
     WhiteSpace,
@@ -24,15 +25,23 @@ import {
     Picker,
     InputItem,
     Modal,
-    Toast
+    Toast,
+    Steps
 } from 'antd-mobile';
 import FirendService from '../service/FirendService'
 import UserService from '../service/UserService'
 
 const { host } = base
+const _find = [
+    'first_id',
+    'second_id',
+    'third_id',
+    'fourth_id'
+]
 
 const Item = List.Item
-
+const Step = Steps.Step
+var nativeShare = new NativeShare()
 export default class Spread extends Component {
     constructor(props) {
         super(props)
@@ -43,7 +52,8 @@ export default class Spread extends Component {
             userinfo: {},
             my_alipay: '',
             modal_xj: false,
-            shareModal: false
+            shareModal: false,
+            step:[]
         }
     }
 
@@ -52,13 +62,16 @@ export default class Spread extends Component {
         this.handleGetUserInfo()
     }
 
-    handleGetData = () => {
-        FirendService.getMyFriends().then(res => {
-            return FirendService.getMyFriends({ type: 2 }).then(firendsNumb => {
-                this.setState({
-                    list: res ||[],
-                    firendsNumb
-                })
+    handleGetData = (con) => {
+        let first_id = con?con.first_id : null,
+            {step} = this.state
+        Promise.all([
+            FirendService.getMyFriends(con),
+            FirendService.getMyFriendsNumb(con)
+        ]).then(([res1,res2])=>{
+            this.setState({
+                list:res1||[],
+                firendsNumb:res2||0
             })
         })
     }
@@ -77,6 +90,10 @@ export default class Spread extends Component {
             this.setState({
                 shareModal: true
             })
+        }
+        
+        if(item.url){
+            window.location.href = item.url
         }
     }
 
@@ -97,13 +114,9 @@ export default class Spread extends Component {
     handleGetMyAccount = () => {
         let { my_alipay, userinfo } = this.state
         return new Promise((reslove, rejcet) => {
-            if (my_alipay) {
-                reslove(my_alipay)
-            } else {
-                UserService.getMyAccount().then(res => {
-                    reslove(res.my_alipay)
-                })
-            }
+            UserService.getMyAccount().then(res => {
+                reslove(res.my_acc)
+            })
         }).then(my_alipay => {
             Modal.prompt('我的账户', '输入支付宝账户', [
                 { text: '取消' },
@@ -149,18 +162,50 @@ export default class Spread extends Component {
 
     handleClose = () => {
         this.setState({
-            modal_xj: false
+            modal_xj: false,
+            shareModal:false
         })
     }
 
     handleOpenShare = () => {
-       window.location.hash = 'share'
+       try {
+            nativeShare.call()
+        } catch (error) {
+           Toast.fail('暂不支持分享功能')
+        }
     }
 
     handleBack = () => {
         window.location.hash = 'home'
     }
 
+    handleStep = item=>{
+        let {step} = this.state
+        if(step.length<4){
+            step = step.concat(item)
+            this.setState({
+                step
+            },()=>{
+                this.handleGetData({
+                    first_id:item.id
+                })
+            })
+        }
+    }
+
+    handleStepBack = item=>{
+        let {step} = this.state
+        if(step.length>0){
+            step.pop()
+            this.setState({
+                step
+            },()=>{
+                this.handleGetData({
+                    first_id:item.first_id
+                })
+            })
+        }
+    }
     render() {
         return [<div key={1} className="home">
             <NavBar mode="dark" leftContent={[< Icon onClick={this.handleBack} key="1" type="left" />]}>我是传播人</NavBar>
@@ -170,10 +215,17 @@ export default class Spread extends Component {
                     <div style={{ flex: 2 }}>我的传播朋友</div>
                     <div style={{ flex: 1 }}>共{this.state.firendsNumb}位</div>
                 </Flex>
+                <div style={{padding:10}}>
+                        {
+                            this.state.step.map(item=>{
+                                return <a key={item.id} onClick={()=>this.handleStepBack(item)}>{item.true_name}</a>
+                            })
+                        }
+                </div>
                 <List renderHeader={`姓名`}>
                     {
                         this.state.list.map(item => {
-                            return <Item arrow="horizontal" key={item.id}>{item.true_name}</Item>
+                            return <Item onClick={()=>this.handleStep(item)} arrow="horizontal" key={item.id}>{item.true_name}</Item>
                         })
                     }
                 </List>

@@ -21,6 +21,8 @@ import Spread from "./pages/Spread";
 import Share from "./pages/Share";
 import HeadShort from "./pages/HeadShort";
 import PublicVedio from "./pages/PublicVedio";
+import Lists from "./pages/Lists";
+import HelpContent from "./pages/HelpContent";
 import "./styles/common.css";
 const App = () => (
   <Router>
@@ -42,7 +44,9 @@ const App = () => (
       <Route path='/spread' component={Spread} />
       <Route path='/share' component={Share} />
       <Route path='/headshort' component={HeadShort} />
+      <Route path='/lists/:type' component={Lists} />
       <Route path='/read/:id' component={Article} />
+      <Route path='/help/:id' component={HelpContent} />
       <Route path='/public_vedio' component={PublicVedio} />
       <Route path='/' component={Index} />
     </Switch>

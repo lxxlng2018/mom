@@ -4,6 +4,7 @@ import menus from '../config/menu';
 import menu2 from '../config/menu2';
 import base from '../config/base';
 import MomServcie from '../service/MomService'
+import NativeShare from 'nativeshare'
 import {
     Flex,
     WhiteSpace,
@@ -21,6 +22,7 @@ import {
 
 const Item = List.Item
 const {file_host,host} = base
+var nativeShare = new NativeShare()
 
 export default class Index extends Component {
     constructor(props) {
@@ -61,7 +63,7 @@ export default class Index extends Component {
             MomServcie.getPublicList(10),
             MomServcie.getPublicList(11),
             MomServcie.getHomeSpeech(),
-            MomServcie.getHomeHlxz(),
+            MomServcie.getPublicList(1),
             MomServcie.getHomePhotos(),
             MomServcie.getHomeFirends()
         ]).then(res=>{
@@ -77,6 +79,8 @@ export default class Index extends Component {
                 list7:res[7],
                 list8:res[8]
             })
+        }).catch(err=>{
+            console.log(err)
         })
     }
 
@@ -148,7 +152,7 @@ export default class Index extends Component {
             <div className="home-menu">
                 <Flex wrap="wrap">
                     <a href="#/home">每日健康提醒</a>
-                    <a href="#/">百行孝居先</a>
+                    <a href="#/list">百行孝居先</a>
                     <a href="#/experience">我的治病经验</a>
                     <a href="#/prevention">出生缺陷预防</a>
                     <a href="#/health">健康送爸妈</a>
@@ -240,12 +244,14 @@ export default class Index extends Component {
                                 <div className="time">{item.add_time}</div>
                                     <div className="doctor-notice-content">
                                         <div className="doc-thumb">
-                                            <img src="./icons/1.png" alt=""/>
+                                            <img src="http://txqg.oss-cn-shenzhen.aliyuncs.com/669mom/headshot/14075_100.png" alt=""/>
                                         </div>
-                                        <div className="tips">{item.title}</div>
-                                    <div className="share-btn">
-                                        <a href="#/share" className="am-button am-button-primary am-button-small am-button-inline">送爸妈</a></div>
+                                        <div className="tips">请您关注今天的中老年疾病防治专家提示</div>
+                                        <div className="share-btn">
+                                            <a onClick={this.handleAlert} className="am-button am-button-primary am-button-small am-button-inline">送爸妈</a>
+                                        </div>
                                     </div>
+                                    <div className="buttom-title">今日提示：{item.title}</div>
                                 </div>
                             })
                         }
@@ -253,24 +259,31 @@ export default class Index extends Component {
                     </List>
                 </div>
                 <div>
-                    <div className="block_title_l">百行孝居先</div>
-                    <List>
-                        {
-                            this.state.list4.map(item=>{
-                            return <div key={item.id} className="doctor-notice">
-                                <div className="time">{item.add_time}</div>
-                                    <div className="doctor-notice-content">
-                                        <div className="doc-thumb">
-                                            <img src="./icons/1.png" alt=""/>
-                                        </div>
-                                        <div className="tips">{item.title}</div>
-                                    <div className="share-btn">
-                                        <a href="#/share" className="am-button am-button-primary am-button-small am-button-inline">送爸妈</a></div>
-                                    </div>
-                                </div>
-                            })
-                        }
-                    </List>
+                    <div id="list4" className="block_title_l">百行孝居先</div>
+                    <Flex>
+                        <List style={{width:'30%'}}>
+                            {
+                                this.state.list4.slice(0,5).map(item=>{
+                                return <Item onClick={()=>this.handleRead(item.id)} key={item.id}>{item.title}</Item>
+                                })
+                            }
+                        </List>
+                        <List style={{width:'30%'}}>
+                            {
+                                this.state.list4.slice(6,10).map(item=>{
+                                return <Item onClick={()=>this.handleRead(item.id)} key={item.id}>{item.title}</Item>
+                                })
+                            }
+                        </List>
+                        <List style={{width:'30%'}}>
+                            {
+                                this.state.list4.slice(11,15).map(item=>{
+                                return <Item onClick={()=>this.handleRead(item.id)} key={item.id}>{item.title}</Item>
+                                })
+                            }
+                        </List>
+                    </Flex>
+                     <div className="am-list-b"><a onClick={()=>this.handleAlert()}>更多</a></div>
                 </div>
                 <Carousel autoplay infinite className="home-carouel">
                     <img src="http://txqg.oss-cn-shenzhen.aliyuncs.com/669mom/wap/图五.png" alt=""/>
@@ -466,7 +479,7 @@ export default class Index extends Component {
                         </Flex>
 
                         <div className="grid-user">
-                            {this.state.list8.map(gridItem)}
+                            {this.state.list8.slice(0,16).map(gridItem)}
                         </div>
                     </div>
                     <div>

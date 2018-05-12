@@ -7,7 +7,7 @@ export default [
     {
         icon:`${file_host}/1.png`,
         text:'每日健康提醒',
-        url:'#/home'
+        url:'#/lists/health'
     },
     {
         icon:`${file_host}/2.png`,
@@ -22,12 +22,12 @@ export default [
     {
         icon:`${file_host}/4.png`,
         text:'出生缺陷预防',
-        url:'#/prevention'
+        url:'http://www.669669669.com'
     },
     {
         icon:`${file_host}/5.png`,
         text:'专家孕哺讲座',
-        url:'#/lecture'
+        url:'http://www.669669669.com/wap/index/exptlect.html'
     },
     {
         icon:`${file_host}/6.png`,
@@ -47,7 +47,7 @@ export default [
     {
         icon:`${file_host}/9.png`,
         text:'百行孝居先',
-        url:'#/health'
+        url:'#/fealty'
     },
     {
         icon:'',

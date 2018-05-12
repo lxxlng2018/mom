@@ -17,7 +17,8 @@ import {
     InputItem,
     Toast,
     Modal,
-    Radio
+    Radio,
+    Picker
 } from 'antd-mobile';
 
 import ExpriceService from '../service/ExpriceService'
@@ -35,7 +36,9 @@ export default class Experience extends Component {
             title:``,
             modal:false,
             btnLoading:false,
-            page:1
+            page:1,
+            content:'',
+            typesMap:null
         }
     }
 
@@ -46,8 +49,15 @@ export default class Experience extends Component {
 
     handleGetTypes = ()=>{
         ExpriceService.getTypes().then(res=>{
+            let typesMap = {}
+            if(res && res instanceof Array){
+                res.map(item=>{
+                    typesMap[item.id] = item.name
+                })
+            }
             this.setState({
-                types:res||[]
+                types:res||[],
+                typesMap
             })
         })
     }
@@ -66,17 +76,20 @@ export default class Experience extends Component {
     }
 
     handleAdd =()=>{
-        const {title,content}=this.state
+        const {title,content,small_type}=this.state
         if(!title){
             return Toast.fail('请输入标题', 1);
         }
         if(!content){
             return Toast.fail('请输入内容', 1);
         }
+        if(!small_type){
+            return Toast.fail('请选择类型',1);
+        }
         this.setState({
             btnLoading:true
         })
-        ExpriceService.add({title,content}).then(res=>{
+        ExpriceService.add({small_type,title,content}).then(res=>{
             if(res){
                 Toast.success('添加成功', 1,()=>{
                     window.location.reload()
@@ -140,6 +153,12 @@ export default class Experience extends Component {
             title
         })
     }
+
+    
+    componentDidCatch(error, info) {
+        console.log(error)
+    }
+    
 
     render() {
 
@@ -215,6 +234,23 @@ export default class Experience extends Component {
                         <WhiteSpace size="lg"/>
                         <WingBlank>
                             <List>
+                                <Picker extra="必选"
+                                    data={(()=>{
+                                        return this.state.types.map(item=>{
+                                            return {
+                                                value:item.id,
+                                                label:item.name
+                                            }
+                                        })
+                                    })()}
+                                    title="类型"
+                                    cols={1}
+                                    onOk={e=>this.handleValue('small_type',e[0])}
+                                    onChange={e=>this.handleValue('small_type',e[0])}
+                                    onDismiss={e => console.log('dismiss', e)}
+                                    >
+                                    <List.Item arrow="horizontal">分类 {this.state.small_type && `已选择${this.state.typesMap[this.state.small_type]}`}</List.Item>
+                                </Picker>
                                 <InputItem
                                 placeholder="在此输入标题"
                                 onChange={(value)=>{this.handleValue('title',value)}}

@@ -3,7 +3,8 @@
  */
 import React, { Component } from 'react';
 import moment from 'moment';
-import UploadImage from 'react-upload-images';
+import Upload from 'rc-upload'
+import base from '../config/base'
 import {
     Flex,
     WhiteSpace,
@@ -25,13 +26,19 @@ import {
 } from 'antd-mobile';
 import FirendService from '../service/FirendService'
 const Item = List.Item
+const host = base.host
 
 export default class MyCard extends Component {
     constructor(props) {
         super(props)
         this.state = {
             types:[],
-            data:{}
+            data:{},
+            upload:{
+                name:'imgFile',
+                action:`${host}/kindedit/php/upload_jsone.php`,
+                onSuccess:res=>this.handleSuccess(res)
+            }
         }
     }
 
@@ -79,7 +86,6 @@ export default class MyCard extends Component {
     }
 
     handleField = (field,val)=>{
-        console.log(field,val)
         if(!val){
             return Toast.fail(`请选择内容`)
         }
@@ -92,11 +98,18 @@ export default class MyCard extends Component {
         })
     }
 
+    handleUpload = file=>{
+        console.log(file)
+    }
+
 
     submit = ()=>{
         let {data} = this.state
         FirendService.add(data).then(res=>{
-            console.log(res);
+            if(res.data){
+                return Toast.fail('名片添加失败')
+            }
+            window.location.href = '#/firends'
         })
     }
 
@@ -130,9 +143,11 @@ export default class MyCard extends Component {
                         moneyKeyboardAlign="left">网名</InputItem>
                     <Flex className="am-list-item am-input-item am-list-item-middle">
                         <div className="am-input-label" style={{ flex: 1 }}>头像上传</div>
+                        <div>
+                            <img src="" alt=""/>
+                        </div>
                         <div style={{ flex: 2 }}>
-                            <UploadImage name="imgFile" uploadLink="http://121.42.46.178:3440/" />
-                            <Button type="primary" size="small" inline style={{ margin: '0 2px' }}>上传本地照片</Button>
+                            <Upload {...this.state.upload}><Button type="primary" size="small" inline style={{ margin: '0 2px' }}>上传本地照片</Button></Upload>
                             <Button type="primary" size="small" inline style={{ margin: '0 5px' }}>选择推荐头像</Button>
                         </div>
                     </Flex>
@@ -174,7 +189,7 @@ export default class MyCard extends Component {
                         <Item >爱好</Item>
                     </Picker>
                     <Picker cols={1} data={(() => this.handleGetType('degree'))()}
-                        onOk={(val)=>this.handleField('degree',val)}
+                        onOk={(val)=>this.handleField('degree',val[0])}
                     >
                         <Item >学历</Item>
                     </Picker>

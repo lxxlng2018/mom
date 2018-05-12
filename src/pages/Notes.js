@@ -19,6 +19,8 @@ import {
     TextareaItem
 } from 'antd-mobile';
 
+import MomService from '../service/MomService'
+
 const Item = List.Item
 
 export default class Notes extends Component {
@@ -29,14 +31,38 @@ export default class Notes extends Component {
         }
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        this.handleGetData()
+    }
+
+    handleGetData = ()=>{
+        MomService.getPublicList(1).then(res=>{
+            this.setState({
+                list:res || []
+            })
+        })
+    }
+
+    handleRead = id=>{
+        if(id){
+            window.location.hash = `read/${id}`
+        }
+    }
+
+    handleBack = ()=>{
+        window.location.href = '#/home'
+    }
 
     render() {
 
         return <div className="home">
-            <NavBar mode="dark" rightContent={[< Icon key = "1" type = "ellipsis" / >]}>青春婚恋须知</NavBar>
+            <NavBar mode="dark" leftContent={[< Icon onClick={this.handleBack} key = "1" type = "left" / >]}>青春婚恋须知</NavBar>
             <div className="content">
-                <iframe frameBorder={0} style={{width:'100%',height:800}} src="http://www.669669669.com/wap/index/hlxz"></iframe>
+                 <List>
+                        {
+                            this.state.list.map(item => <Item onClick={() => this.handleRead(item.id)} key={item.id} extra={item.add_time}>{item.title}</Item>)
+                        }
+                    </List>
             </div>
         </div>
 

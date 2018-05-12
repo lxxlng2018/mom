@@ -1,11 +1,10 @@
-import $ from 'jquery';
+import $ from './httpService';
 import base from '../config/base'
 const {host} = base;
 export default {
     getTypes:()=>{
         return new Promise((reslove, rejcet) => {
             $.get(`${host}/wap/healthuser/addMyzbjx`, {
-                JKCBSSESSID: localStorage.getItem('token')
             }, res => {
                 if (res.status) {
                     reslove(res.data)
@@ -20,7 +19,6 @@ export default {
     }) => {
         return new Promise((reslove, rejcet) => {
             $.post(`${host}/wap/healthuser/myzbjy`, {
-                JKCBSSESSID: localStorage.getItem('token'),
                 small_type,
                 title,
                 page
@@ -33,13 +31,14 @@ export default {
     },
     add:({
         title,
-        content
+        content,
+        small_type
     })=>{
         return new Promise((reslove, rejcet) => {
             $.post(`${host}/wap/healthuser/addMyzbjx`, {
-                JKCBSSESSID: localStorage.getItem('token'),
                 title,
-                content
+                content,
+                small_type
             },res=>{
                 reslove(res)
             },'json')

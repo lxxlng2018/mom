@@ -54,12 +54,19 @@ export default class Home extends Component {
                 password
             })
             .then(res => {
-                localStorage.setItem('token', res.info)
-                window.location.hash = 'home'
+                if(res.data != 0){
+                    return Toast.fail(res.info)
+                }
+                sessionStorage.setItem('token', res.info)
+                window.location.href = '#/home'
             })
             .catch(err => {
-                console.log(err);
+                Toast.fail('登录失败，请重试');
             })
+    }
+
+    handleBack = ()=>{
+        window.location.href = '#/'
     }
 
     render() {
@@ -67,7 +74,7 @@ export default class Home extends Component {
         return <div className="home">
             <NavBar
                 mode="dark"
-                rightContent={[< Icon key="0" type="search" style={{ marginRight: '16px' }} />, <Icon key="1" type="ellipsis" />]}>用户登录</NavBar>
+                leftContent={[<Icon onClick={this.handleBack} key="0" type="left" />]}>用户登录</NavBar>
             <div className="content">
                 <List>
                     <InputItem onChange={(e) => this.handleUserName(e)}>账号</InputItem>
