@@ -10,6 +10,13 @@ $.ajaxSetup({
         }
         
     },
+    error:err=>{
+        if(err && err.status == 0){
+            return Toast.fail('登录失效',3,()=>{
+                window.location.href = '#/login'
+            })
+        }
+    }
 });
 export default {
     get:function(url,data,cb){

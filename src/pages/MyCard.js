@@ -33,7 +33,19 @@ export default class MyCard extends Component {
         super(props)
         this.state = {
             types:[],
-            data:{},
+            data:{
+                character: "",
+                degree: null,
+                headshot: "",
+                interest: null,
+                jy_yx: null,
+                phone: "",
+                profession: "",
+                province: "",
+                qq: "",
+                sex: "",
+                weixin: "",
+            },
             upload:{
                 name:'imgFile',
                 action:`${host}/kindedit/php/upload_jsone.php`,
@@ -44,6 +56,13 @@ export default class MyCard extends Component {
 
     componentDidMount() {
         this.handleGetTypes()
+        FirendService.getMyCard().then(res=>{
+            if(res[0]){
+                this.setState({
+                    data:res[0]
+                })
+            }
+        })
     }
     handleGetTypes = () => {
         FirendService.getTypes().then(res => {
@@ -74,6 +93,7 @@ export default class MyCard extends Component {
         return types && types.filter(item => {
             return item.type == type
         }).map(item => {
+            console.log(type)
             return {
                 label:item.name,
                 value:item.id
@@ -98,8 +118,14 @@ export default class MyCard extends Component {
         })
     }
 
-    handleUpload = file=>{
-        console.log(file)
+    handleSuccess = res=>{
+        let {data} = this.state
+        this.setState({
+            data:{
+                ...data,
+                headshot:res.url
+            }
+        })
     }
 
 
@@ -109,6 +135,18 @@ export default class MyCard extends Component {
             if(res.data){
                 return Toast.fail('名片添加失败')
             }
+            Toast.info('名片已保存,请点击投放')
+            window.location.href = '#/mycard'
+        })
+    }
+
+    handleSend = ()=>{
+        let {data} = this.state
+        FirendService.toFriendWord(data).then(res=>{
+            if(res.data){
+                return Toast.fail('名片投放失败')
+            }
+            Toast.info('名片已投放')
             window.location.href = '#/firends'
         })
     }
@@ -135,26 +173,21 @@ export default class MyCard extends Component {
                     }}
                 >
                 </Tabs>
-                <List>
-                    <InputItem
-                        type="string"
-                        placeholder=""
-                        clear
-                        moneyKeyboardAlign="left">网名</InputItem>
+                <List renderHeader="我的名片">
                     <Flex className="am-list-item am-input-item am-list-item-middle">
                         <div className="am-input-label" style={{ flex: 1 }}>头像上传</div>
-                        <div>
-                            <img src="" alt=""/>
+                        <div style={{flex:1}}>
+                            {this.state.data.headshot && <img style={{height:60,width:60}} src={host+this.state.data.headshot} alt=""/>}
                         </div>
-                        <div style={{ flex: 2 }}>
-                            <Upload {...this.state.upload}><Button type="primary" size="small" inline style={{ margin: '0 2px' }}>上传本地照片</Button></Upload>
-                            <Button type="primary" size="small" inline style={{ margin: '0 5px' }}>选择推荐头像</Button>
+                        <div style={{ flex: 3 }}>
+                            <Upload {...this.state.upload}><Button type="primary" size="small" inline style={{ margin: '0 2px' }}>上传照片</Button></Upload>
+                            <Button type="primary" size="small" inline style={{ margin: '0 5px' }}>选择头像</Button>
                         </div>
                     </Flex>
                     <Picker cols={1} 
                         data={(()=>this.handleGetType('jy_yx'))()}
-                        onOk={(val)=>this.handleField('jx_yx',val[0])}
-                        value={[this.state.data.jx_yx]}
+                        onOk={(val)=>this.handleField('jy_yx',val[0])}
+                        value={[this.state.data.jy_yx]}
                         >
                         <Item >交友目的</Item>
                     </Picker>
@@ -170,26 +203,26 @@ export default class MyCard extends Component {
                     >
                         <Item >性别</Item>
                     </Picker>
-                    <Picker cols={1} data={(() => this.handleGetType('SHENGSHI'))()}
+                    <Picker cols={1} value={this.state.data.province} data={(() => this.handleGetType('SHENGSHI'))()}
                         onOk={(val)=>this.handleField('province',val[0])}
                         value={[this.state.data.province]}
                     >
                         <Item >地区</Item>
                     </Picker>
-                    <Picker cols={1} data={(() => this.handleGetType('profession'))()}
+                    <Picker cols={1} value={this.state.data.profession} data={(() => this.handleGetType('profession'))()}
                         onOk={(val)=>this.handleField('profession',val[0])}
                         value={[this.state.data.profession]}
                     >
                         <Item >行业</Item>
                     </Picker>
-                    <Picker cols={1} data={(() => this.handleGetType('character'))()}
+                    <Picker cols={1} value={this.state.data.character} data={(() => this.handleGetType('character'))()}
                         onOk={(val)=>this.handleField('character',val[0])}
                         value={[this.state.data.character]}
                     >
                         <Item >爱好</Item>
                     </Picker>
-                    <Picker cols={1} data={(() => this.handleGetType('degree'))()}
-                        onOk={(val)=>this.handleField('degree',val[0])}
+                    <Picker cols={1} value={this.state.data.degree} data={(() => this.handleGetType('degree'))()}
+                        onOk={(val)=>this.handleField('degree',val)}
                     >
                         <Item >学历</Item>
                     </Picker>
@@ -197,21 +230,27 @@ export default class MyCard extends Component {
                         type="string"
                         placeholder=""
                         clear
+                        value={this.state.data.phone}
                         onChange={(e)=>this.handleField('phone',e)}
                         moneyKeyboardAlign="left">手机</InputItem>
                     <InputItem
                         type="string"
                         placeholder=""
                         clear
+                        value={this.state.data.qq}
                         onChange={(e)=>this.handleField('qq',e)}
                         moneyKeyboardAlign="left">QQ</InputItem>
                     <InputItem
                         type="string"
                         placeholder=""
                         clear
+                        value={this.state.data.weixin}
                         onChange={(e)=>this.handleField('weixin',e)}
                         moneyKeyboardAlign="left">微信</InputItem>
-                    <Item><Button onClick={this.submit} type="primary">提交</Button></Item>
+                    <Item style={{display:'flex',alignItems:'center'}}>
+                        <Button style={{margin:'0 10px'}} inline onClick={this.submit} type="primary">提交</Button>
+                        {this.state.data.id && <Button onClick={this.handleSend} inline type="primary">投放</Button>}
+                    </Item>
                 </List>
             </div>
         </div>

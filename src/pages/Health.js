@@ -70,6 +70,12 @@ export default class MyCard extends Component {
         window.location.href = '#/home'
     }
 
+    handleRead = id=>{
+        if(id){
+            window.location.hash = `read/${id}`
+        }
+    }
+
     render() {
         return <div className="home">
             <NavBar mode="dark" leftContent={[< Icon onClick={this.handleBack} key = "1" type = "left" />]}>健康送爸妈</NavBar>
@@ -89,7 +95,7 @@ export default class MyCard extends Component {
                                   <div className="tips">请您关注今天的中老年疾病防治专家提示</div>
                                   <div className="share-btn"><a onClick={this.handleShare} className="am-button am-button-primary am-button-small am-button-inline">送爸妈</a></div>
                                 </div>
-                              <div className="buttom-title">今日提示：{item.title} </div>
+                              <div onClick={()=>this.handleRead(item.id)} className="buttom-title">今日提示：{item.title} </div>
                             </div>
                         })
                     }

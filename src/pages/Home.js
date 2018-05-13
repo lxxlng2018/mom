@@ -55,6 +55,13 @@ export default class Home extends Component {
         }
     }
 
+
+    componentWillReceiveProps(nextProps) {
+        let {userInfo} = this.state
+        console.log(userInfo)
+    }
+    
+
     render() {
 
         return <div className="home">

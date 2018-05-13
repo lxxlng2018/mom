@@ -51,18 +51,36 @@ export default {
         })
     },
     /**
-     * @name 互答帮助内容
+     * @name 回答帮助内容
      */
     addXX:({
         title,
         content,
-        replay_id
+        reply_id
     })=>{
         return new Promise((reslove, rejcet) => {
             $.post(`${host}/wap/healthuser/addxxbz`, {
                 title,
                 content,
-                replay_id
+                reply_id
+            }, res => {
+                if (res.status) {
+                    reslove(res)
+                }
+            }, 'json')
+        })
+    },
+
+    addThank:({
+        title,
+        content,
+        reply_id
+    })=>{
+        return new Promise((reslove, rejcet) => {
+            $.post(`${host}/wap/healthuser/addzryl`, {
+                title,
+                content,
+                reply_id
             }, res => {
                 if (res.status) {
                     reslove(res)

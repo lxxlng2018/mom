@@ -3,6 +3,7 @@
  */
 import React, {Component} from 'react';
 import moment from 'moment';
+import base from '../config/base'
 import {
     Flex,
     WhiteSpace,
@@ -19,20 +20,16 @@ import {
     TextareaItem,
     Modal
 } from 'antd-mobile';
-
+import MomService from '../service/MomService'
 const Item = List.Item
 const alert = Modal.alert
+const host = base.host
 
 export default class Prevention extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            list: Array
-                .from(new Array(4))
-                .map((_val, i) => ({
-                    text: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-                    date: moment().format('YYYY.MM.DD')
-                })),
+            list:[],
             _height:400
         }
     }
@@ -41,20 +38,32 @@ export default class Prevention extends Component {
         this.setState({
             _height:window.screen.height
         })
+
+        MomService.getVedios().then(res=>{
+            this.setState({
+                list:res||[]
+            })
+        })
     }
     handleMenuTab = (index)=>{
-        console.log(index)
         switch (index) {
             case 0:
-                this.handleGetHelpList()
                 break;
             case 1:
                 alert('提示',"电脑端操作体验更好",[{
                     text:'知道了',
-                    onPress:()=>{}
+                    onPress:()=>{
+                        window.location.href = `${host}/Wap/healthuser/momtest.html`
+                    }
                 }])
                 break;
             case 2:
+                alert('提示',"电脑端操作体验更好",[{
+                    text:'知道了',
+                    onPress:()=>{
+                        window.location.href = `${host}/Wap/healthuser/selftesthome.html`
+                    }
+                }])
                 break;
             case 3:
                 break;
@@ -62,11 +71,19 @@ export default class Prevention extends Component {
                 break;
         }
     }
+
+    handleRedirect = id=>{
+        window.location.href = `${host}/wap/health/vedioplay?vid=${id}`
+    }
     
+    handleBack = ()=>{
+        window.location.href = '#/home'
+    }
+
     render() {
 
         return <div className="home">
-            <NavBar mode="dark" rightContent={[< Icon key = "1" type = "ellipsis" / >]}>出生缺陷预防</NavBar>
+            <NavBar mode="dark" leftContent={[< Icon onClick={this.handleBack} key = "1" type = "left" / >]}>出生缺陷预防</NavBar>
             <div className="content">
                 <Tabs
                     tabs={[
@@ -88,24 +105,20 @@ export default class Prevention extends Component {
                         backgroundColor: '#fff'
                     }}>
                         <List>
-                            <Item
-                                thumb={<img style={{width:100,height:60}} src="https://upload.jianshu.io/admin_banners/web_images/4300/30d9d47ea36263ee2a83b953de7230dda74e81c4.png?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"/>}
-                                multipleLine
-                                wrap={true}
-                                arrow="horizontal"
-                            >
-                                asdasdasdasdasdasd
-                                asdasdasdasdasdasdasd
-                                asdadasd
-                                asdasdasd
-                            </Item>
+                            {
+                                this.state.list.map(item=>{
+                                    return <Item
+                                                thumb={<img style={{width:100,height:60}} src={host+item.imgsub}/>}
+                                                multipleLine
+                                                wrap={true}
+                                                arrow="horizontal"
+                                                onClick={()=>this.handleRedirect(item.id)}
+                                            >
+                                                {item.vexplan.slice(0,24)+`...`}
+                                            </Item>
+                                })
+                            }
                         </List>
-                    </div>
-                    <div
-                        style={{
-                        backgroundColor: '#fff'
-                    }}>
-                        <iframe style={{width:'100%',height:this.state._height}} src="http://www.669669669.com/index/momtest"></iframe>
                     </div>
                 </Tabs>
             </div>

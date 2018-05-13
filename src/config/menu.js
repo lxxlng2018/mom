@@ -22,12 +22,12 @@ export default [
     {
         icon:`${file_host}/4.png`,
         text:'出生缺陷预防',
-        url:'http://www.669669669.com'
+        url:'#/prevention'
     },
     {
         icon:`${file_host}/5.png`,
         text:'专家孕哺讲座',
-        url:'http://www.669669669.com/wap/index/exptlect.html'
+        url:'http://www.669669669.com/Wap/healthuser/exptlect.html'
     },
     {
         icon:`${file_host}/6.png`,

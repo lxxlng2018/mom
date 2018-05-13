@@ -55,6 +55,14 @@ export default class Lists extends Component {
         window.history.back()
     }
 
+
+    handleRead = id=>{
+        if(id){
+            window.location.hash = `read/${id}`
+        }
+    }
+
+
     render() {
         return <div className="home">
             <NavBar mode="dark" leftContent={[< Icon onClick={this.handleBack} key = "1" type = "left" />]}>健康提醒</NavBar>
@@ -62,7 +70,7 @@ export default class Lists extends Component {
                 <List>
                     {
                         this.state.list.map(item=>{
-                            return <Item arrow="down">{item.title} <Item.Brief>{item.add_time}</Item.Brief></Item>
+                            return <Item key={item.id} onClick={()=>this.handleRead(item.id)}>{item.title} <Item.Brief>{item.add_time}</Item.Brief></Item>
                         })
                     }
                 </List>

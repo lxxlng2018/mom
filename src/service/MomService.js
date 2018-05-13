@@ -3,9 +3,13 @@ import base from '../config/base'
 const host = base.host
 export default {
     getVedios: () => {
-        $.post(`${host}/wap/mom/ajaxVediolist`, {}, res => {
-            console.log(res)
-        }, 'json')
+        return new Promise((reslove, rejcet) => {
+            $.post(`${host}/wap/health/vediolist`,{},res => {
+                if(res.status){
+                    reslove(res.data||[])
+                }
+            }, 'json')
+        })
     },
     /**
      * @name 获取公共文章

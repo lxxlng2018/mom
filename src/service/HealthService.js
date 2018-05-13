@@ -13,7 +13,7 @@ export default {
     },
     getList: () => {
         return new Promise((reslove, rejcet) => {
-            $.post(`${host}/wap/healthuser/jksbm`,{},res=>{
+            $.post(`${host}/wap/healthuser/mrjktx`,{},res=>{
                 if(res.status){
                     reslove(res.data)
                 }

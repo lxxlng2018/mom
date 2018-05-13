@@ -57,7 +57,7 @@ export default {
     getMyCard: () => {
         return new Promise((reslove, reject) => {
             $
-                .post(`${host}/Wap/healthuser/`, {
+                .post(`${host}/Wap/healthuser/getCard`, {
                 }, function (res) {
                     if (res.status) {
                         reslove(res.data)
@@ -70,6 +70,18 @@ export default {
         return new Promise((reslove, rejcect) => {
             $
                 .post(`${host}/Wap/healthuser/addCard`, {
+                    ...data
+                }, function (res) {
+                    if (res.status) {
+                        reslove(res.data)
+                    }
+                }, 'json')
+        })
+    },
+    toFriendWord:data=>{
+        return new Promise((reslove, rejcect) => {
+            $
+                .post(`${host}/Wap/healthuser/toFriendWord`, {
                     ...data
                 }, function (res) {
                     if (res.status) {

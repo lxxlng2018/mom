@@ -41,23 +41,40 @@ export default class Difficult extends Component {
                 title:'',
                 content:'',
                 replay_content:'',
-                anser:false
+                anser:false,
+                opration:[
+                    {
+                        text:'我来帮助',
+                        onPress:()=>this.handleOpenAnswer()
+                    },
+                    {
+                        text:'关闭',
+                        onPress:()=>this.handleClose()
+                    },
+                    {
+                        text:'提交',
+                        onPress:()=>this.handleSubmit()
+                    }
+                ],
+                showOpration:[]
             },
-            opration:[
-                {
-                    text:'我来帮助',
-                    onPress:()=>this.handleOpenAnswer()
-                },
-                {
-                    text:'关闭',
-                    onPress:()=>this.handleClose()
-                },
-                {
-                    text:'提交',
-                    onPress:()=>this.handleSubmit()
-                }
-            ],
-            showOpration:[]
+            thank:{
+                visible:false,
+                title:'',
+                content:'',
+                replay_content:'',
+                anser:false,
+                opration:[
+                    {
+                        text:'关闭',
+                        onPress:()=>this.handleClose()
+                    },
+                    {
+                        text:'提交',
+                        onPress:()=>this.handleSubmitThank()
+                    }
+                ]
+            }
         }
     }
 
@@ -158,14 +175,14 @@ export default class Difficult extends Component {
     }
 
     handleDetail = id=>{
-        let {list,opration,userinfo} = this.state;
+        let {list,modal,userinfo} = this.state;
         let article = list.find(item=>{
             return item.id == id
         })
         this.setState({
-            showOpration:opration.slice(0,2),
             modal:{
                 ...article,
+                showOpration:modal.opration.slice(0,2),
                 visible:true
             }
         })
@@ -175,9 +192,43 @@ export default class Difficult extends Component {
     handleClose = ()=>{
         this.setState({
             modal:{
+                visible:false,
                 title:'',
                 content:'',
-                visible:false
+                replay_content:'',
+                anser:false,
+                opration:[
+                    {
+                        text:'我来帮助',
+                        onPress:()=>this.handleOpenAnswer()
+                    },
+                    {
+                        text:'关闭',
+                        onPress:()=>this.handleClose()
+                    },
+                    {
+                        text:'提交',
+                        onPress:()=>this.handleSubmit()
+                    }
+                ],
+                showOpration:[]
+            },
+            thank:{
+                visible:false,
+                title:'',
+                content:'',
+                replay_content:'',
+                anser:false,
+                opration:[
+                    {
+                        text:'关闭',
+                        onPress:()=>this.handleClose()
+                    },
+                    {
+                        text:'提交',
+                        onPress:()=>this.handleSubmitThank()
+                    }
+                ]
             }
         })
     }
@@ -185,23 +236,55 @@ export default class Difficult extends Component {
     handleOpenAnswer = ()=>{
         let {modal,opration} = this.state
         this.setState({
-            showOpration:opration.slice(1,3),
             modal:{
                 ...modal,
+                showOpration:modal.opration.slice(1,3),
                 anser:true
             }
         })
     }
 
     handleSubmit = ()=> {
-        const {modal} = this.state;
+        const {modal,userinfo} = this.state;
         let {id,title,replay_content} = modal
         DifficultService.addXX({
-            title:`回复：${title}`,
+            title:`${userinfo.true_name}回复说：${title}`,
             content:replay_content,
-            replay_id:id
+            reply_id:id
         }).then(res=>{
+            Toast.info('回复成功',1)
+            this.setState({
+                moda:{
+                    ...modal,
+                    visible:false,
+                    title:'',
+                    content:'',
+                    replay_content:'',
+                    anser:false
+                }
+            })
+        })
+    }
 
+    handleSubmitThank = ()=> {
+        const {thank,userinfo} = this.state;
+        let {id,title,replay_content} = thank
+        DifficultService.addThank({
+            title:`${userinfo.true_name}感谢：${title}`,
+            content:replay_content,
+            reply_id:id
+        }).then(res=>{
+            Toast.info('感谢成功',1)
+            this.setState({
+                thank:{
+                    ...thank,
+                    visible:false,
+                    title:'',
+                    content:'',
+                    replay_content:'',
+                    anser:false
+                }
+            })
         })
     }
 
@@ -212,6 +295,25 @@ export default class Difficult extends Component {
                 ...modal,
                 replay_content:value
             }
+        })
+    }
+
+
+    handleThanks = ()=>{
+        let {thank} = this.state
+        this.setState({
+            thank:{
+                ...thank,
+                visible:true
+            }
+        })
+    }
+
+    handleThank = value =>{
+        let {thank} = this.state
+        thank.replay_content = value
+        this.setState({
+            thank
         })
     }
 
@@ -297,8 +399,13 @@ export default class Difficult extends Component {
                                     .state
                                     .listMy
                                     .map((item, index) => {
-                                        return <Item arrow="horizontal" key={index}>{item.title}
-                                        <Brief>{item.add_time}</Brief>
+                                        return <Item key={index}>{item.title}
+                                                <div className="mini-time">{item.add_time}</div>
+                                                {
+                                                    item.reply && item.reply.map(r=>{
+                                                        return <div className="reply-content" key={r.id}><div>{r.content}</div><Button onClick={this.handleThanks} inline size="small">谢谢帮助</Button></div>
+                                                    })
+                                                }
                                         </Item>
                                     })
 }
@@ -335,7 +442,7 @@ export default class Difficult extends Component {
             visible={this.state.modal.visible}
             animationType="slide"
             onClose={this.handleClose}
-            footer={this.state.showOpration}
+            footer={this.state.modal.showOpration}
             >
                 <div className="qus_content">
                     <div dangerouslySetInnerHTML={{ __html: this.state.modal.content}}>
@@ -344,9 +451,22 @@ export default class Difficult extends Component {
                 </div>
                 {
                     this.state.modal.anser && <div className="qus_textarea">
-                                                 <InputItem onChange={this.handleReply} type="text" placeholder="请输入内容..." />
+                                                 <InputItem onChange={this.handleReply} type="text" placeholder="请输入帮助的话..." />
                                               </div>
                 }
+                
+            </Modal>
+            <Modal
+            popup
+            title={`感谢`}
+            visible={this.state.thank.visible}
+            animationType="slide"
+            onClose={this.handleClose}
+            footer={this.state.thank.opration}
+            >
+                <div className="qus_textarea">
+                    <InputItem onChange={this.handleThank} type="text" placeholder="请输入感谢的话..." />
+                </div>
                 
             </Modal>
         </div>

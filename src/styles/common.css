@@ -383,3 +383,13 @@ input:active~.box-icon {
     border:1px #ddd solid;
     border-radius: 50%;
 }
+
+.mini-time {
+    font-size: 12px;
+}
+
+.reply-content{
+    font-size: 12px;
+    background-color:#c4ffebcf;
+    padding:5px;
+}
