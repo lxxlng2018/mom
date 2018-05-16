@@ -23,7 +23,7 @@ export default [
     {
         icon:`${file_host}/55.png`,
         text:'我的头像',
-        url:'#/headshort'
+        url:'/ImgCropping/index.html'
     },
     {
         icon:`${file_host}/66.png`,

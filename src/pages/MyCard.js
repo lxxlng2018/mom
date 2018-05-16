@@ -25,6 +25,7 @@ import {
     Toast
 } from 'antd-mobile';
 import FirendService from '../service/FirendService'
+import Header from '../components/Header'
 const Item = List.Item
 const host = base.host
 
@@ -34,6 +35,7 @@ export default class MyCard extends Component {
         this.state = {
             types:[],
             data:{
+                nickName:'',
                 character: "",
                 degree: null,
                 headshot: "",
@@ -153,7 +155,7 @@ export default class MyCard extends Component {
 
     render() {
         return <div className="home">
-            <NavBar mode="dark" leftContent={[< Icon key="1" onClick={this.handleBack} type="left" />]}>我的交友名片</NavBar>
+            <Header title="我的交友名片" back={true} logout={true} />
             <div className="content">
                 <Tabs
                     tabs={[
@@ -174,6 +176,13 @@ export default class MyCard extends Component {
                 >
                 </Tabs>
                 <List renderHeader="我的名片">
+                    <InputItem
+                        type="string"
+                        placeholder="输入网名"
+                        clear
+                        value={this.state.data.nickName}
+                        onChange={(e)=>this.handleField('nickName',e)}
+                        moneyKeyboardAlign="left">网名</InputItem>
                     <Flex className="am-list-item am-input-item am-list-item-middle">
                         <div className="am-input-label" style={{ flex: 1 }}>头像上传</div>
                         <div style={{flex:1}}>

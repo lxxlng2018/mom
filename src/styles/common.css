@@ -1,3 +1,6 @@
+
+@import '//at.alicdn.com/t/font_666180_ro6maz7mw50o1or.css';
+
 body {
     background-color: #fff !important;
     padding: 0 0 30px;
@@ -92,7 +95,6 @@ body {
 }
 
 .user_item {
-    flex: 1;
     align-items: baseline;
     flex-direction: inherit;
     margin: 10px;
@@ -104,9 +106,10 @@ body {
 }
 
 .head img {
-    max-width: 100px;
+    width:60px;
     border: 1px #ddd solid;
     border-radius: 50%;
+    height: 60px;
 }
 
 .head .name {
@@ -334,11 +337,7 @@ input:active~.box-icon {
 }
 
 .home .head {
-    width: 60px;
-}
-
-.home .head img {
-    max-width: 80px;
+    /* width: 60px; */
 }
 
 .a-title {
@@ -392,4 +391,12 @@ input:active~.box-icon {
     font-size: 12px;
     background-color:#c4ffebcf;
     padding:5px;
+}
+
+.share{
+    padding: 10px;
+}
+
+.share a{
+    margin-right: 10px;
 }

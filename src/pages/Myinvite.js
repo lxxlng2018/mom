@@ -24,6 +24,7 @@ import {
 } from 'antd-mobile';
 
 import FirendService from '../service/FirendService'
+import Header from '../components/Header'
 
 const Item = List.Item
 const RadioItem = Radio.RadioItem
@@ -114,7 +115,7 @@ export default class Myinvite extends Component {
         </div>
 
         return <div className="home">
-            <NavBar mode="dark" leftContent={[< Icon key="1" onClick={this.handleBack} type="left" />]}>交友大世界</NavBar>
+            <Header title="我的邀请" back={true} logout={true} />
             <div className="content">
                 <Tabs
                     tabs={[

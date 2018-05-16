@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 import moment from 'moment';
 import DifficultService from '../service/DifficultService'
 import UserService from '../service/UserService'
+import Header from '../components/Header'
 import {
     Flex,
     WhiteSpace,
@@ -181,6 +182,7 @@ export default class Difficult extends Component {
         })
         this.setState({
             modal:{
+                ...modal,
                 ...article,
                 showOpration:modal.opration.slice(0,2),
                 visible:true
@@ -234,7 +236,7 @@ export default class Difficult extends Component {
     }
 
     handleOpenAnswer = ()=>{
-        let {modal,opration} = this.state
+        let {modal} = this.state
         this.setState({
             modal:{
                 ...modal,
@@ -254,7 +256,7 @@ export default class Difficult extends Component {
         }).then(res=>{
             Toast.info('回复成功',1)
             this.setState({
-                moda:{
+                modal:{
                     ...modal,
                     visible:false,
                     title:'',
@@ -321,7 +323,7 @@ export default class Difficult extends Component {
     render() {
 
         return <div className="home">
-            <NavBar mode="dark" leftContent={[< Icon onClick={this.handleBack} key = "1" type = "left" / >]}>疑难杂症120</NavBar>
+            <Header back logout title="疑难杂症120" />
             <div className="content">
                 <Tabs
                     tabs={[
@@ -426,7 +428,8 @@ export default class Difficult extends Component {
                                     .state
                                     .listZr
                                     .map((item, index) => {
-                                        return <Item arrow="horizontal" key={index}>{item.title}
+                                        return <Item multipleLine wrap={true} key={index}>{item.title}
+                                            {item.content}
                                             <Brief>{item.add_time}</Brief>
                                         </Item>
                                     })

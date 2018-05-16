@@ -3,6 +3,7 @@ import moment from 'moment';
 import menus from '../config/menu';
 import base from '../config/base';
 import UserService from '../service//UserService'
+import Header from '../components/Header'
 import {
     Flex,
     WhiteSpace,
@@ -11,7 +12,8 @@ import {
     Carousel,
     Grid,
     List,
-    WingBlank
+    WingBlank,
+    Modal
 } from 'antd-mobile';
 
 const Item = List.Item
@@ -31,6 +33,13 @@ export default class Home extends Component {
         UserService.getUserInfo().then((info)=>{
             this.setState({
                 userInfo:info
+            },()=>{
+                if(!this.state.userInfo.my_alipay){
+                    Modal.alert("绑定支付宝账户","请先绑定支付宝账号，否则将影响奖励金的收取",[{
+                        text:'确定',
+                        onPress:()=>{window.location.href=`#/spread`}
+                    }])
+                }
             })
             return UserService.getEveryDayNotice().then(res=>{
                 this.setState({
@@ -65,8 +74,7 @@ export default class Home extends Component {
     render() {
 
         return <div className="home">
-            <NavBar
-                mode="dark">健康传播</NavBar>
+            <Header title="健康传播" back={false} logout={true} />
             <div className="content">
                 <Carousel autoplay={false} infinite dots={false}>
                     <div className="home-banner">

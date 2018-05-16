@@ -16,6 +16,10 @@ export default {
                 }, 'json')
         })
     },
+    logout:()=>{
+        sessionStorage.clear()
+        window.location.href="#/index"
+    },
     getUserInfo:()=>{
         return new Promise((reslove,reject)=>{
             $.post(`${host}/wap/healthuser/getUser`,{},function(data){

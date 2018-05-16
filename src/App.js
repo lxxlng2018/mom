@@ -19,6 +19,7 @@ import Health from "./pages/Health";
 import Fealty from "./pages/Fealty";
 import Spread from "./pages/Spread";
 import Share from "./pages/Share";
+import Sharep from "./pages/Sharep";
 import HeadShort from "./pages/HeadShort";
 import PublicVedio from "./pages/PublicVedio";
 import Lists from "./pages/Lists";
@@ -43,6 +44,7 @@ const App = () => (
       <Route path='/fealty' component={Fealty} />
       <Route path='/spread' component={Spread} />
       <Route path='/share' component={Share} />
+      <Route path='/share/:sharecode' component={Sharep} />
       <Route path='/headshort' component={HeadShort} />
       <Route path='/lists/:type' component={Lists} />
       <Route path='/read/:id' component={Article} />

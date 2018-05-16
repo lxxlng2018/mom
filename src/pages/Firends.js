@@ -20,13 +20,16 @@ import {
     TextareaItem,
     Tag,
     Modal,
-    Radio
+    Radio,
+    Toast
 } from 'antd-mobile';
-
+import base from '../config/base'
 import FirendService from '../service/FirendService'
+import UserService from '../service/UserService'
 
 const Item = List.Item
 const RadioItem = Radio.RadioItem
+const host = base.host
 
 export default class Firends extends Component {
 
@@ -37,35 +40,55 @@ export default class Firends extends Component {
             ],
             types:[],
             type:"age_range",
+            userinfo:null,
             checked:{
                 jy_yx:null,
                 sex:null,
                 age_range:null,
-                SHENGSHI:null,
+                province:null,
                 profession:null
             },
             checkedId:{
                 jy_yx:null,
                 sex:null,
                 age_range:null,
-                SHENGSHI:null,
+                province:null,
                 profession:null
             },
             cardShow:false,
             card:{},
-            modal:false
+            modal:false,
+            typeMap:null
         }
     }
 
     componentDidMount() {
         this.handleGetTypes()
         this.handleGetData()
+        UserService.getUserInfo().then(userinfo=>{
+            this.setState({
+                userinfo
+            })
+        })
     }
 
     handleGetData = ()=>{
         const {checkedId} = this.state
+        let data = {}
+        if(checkedId.jy_yx){
+            data.jy_yx = checkedId.jy_yx
+        }
+        if(checkedId.sex){
+            data.sex = checkedId.sex
+        }
+        if(checkedId.age_range){
+            data.age_range = checkedId.age_range
+        }
+        if(checkedId.profession){
+            data.profession = checkedId.profession
+        }
         FirendService.getCardList({
-            ...checkedId
+            ...data
         }).then(res=>{
             this.setState({ users:res.result||[]})
         })
@@ -73,7 +96,15 @@ export default class Firends extends Component {
 
     handleGetTypes = ()=>{
         FirendService.getTypes().then(res=>{
-            this.setState({types:res||[]})
+            this.setState({types:res||[]},()=>{
+                let typeMap = {}
+                this.state.types.map(item=>{
+                    typeMap[item.id] = item.name
+                })
+                this.setState({
+                    typeMap
+                })
+            })
         })
     }
 
@@ -129,17 +160,44 @@ export default class Firends extends Component {
         console.log(error,info);
     }
 
+    handleDetail = item=>{
+        this.setState({
+           cardShow:true,
+           card:item
+        })
+    }
+
+    handleClose = ()=>{
+        this.setState({
+           cardShow:false
+        })
+    }
+
+    handleInvitate = (card)=>{
+        let {userinfo} = this.state
+        if(card.id == userinfo.id){
+            return Toast.fail('不能邀请自己')
+        }
+        FirendService.invitate({
+            from_id:userinfo.id,
+            to_id:card.id
+        }).then(res=>{
+            if(!res){
+                Toast.info('邀请成功',2)
+            }
+        })
+    }
+
 
     render() {
-        console.log(this.state.types);
-        const {checked,type} = this.state
-        const gridItem = (item,index)=><div key={index} className="user_item">
+        const {checked,type,typeMap,card} = this.state
+        const gridItem = (item,index)=><div key={index} onClick={()=>this.handleDetail(item)} className="user_item">
             <div className="head">
-                <img style={{width:'100%'}} src={item.headshot} alt={item.id}/>
-                <div className="name">{item.id}</div>
+                <img src={host+item.headshot} alt={item.id}/>
+                <div className="name">{item.nickName}</div>
             </div>
             <div className="peps">
-                目的：{item.jy_yx}
+                目的：{typeMap && typeMap[item.jy_yx]}
             </div>
         </div>
 
@@ -288,24 +346,26 @@ export default class Firends extends Component {
 
                 <Modal
                     visible={this.state.cardShow}
-                    title="张山"
+                    title={card.nickName}
                     transparent
-                    footer={[{ text: '我要邀请', onPress: () => {}}]}
+                    footer={[
+                        { text: '我要邀请', onPress: () => this.handleInvitate(card)},
+                        { text: '关闭', onPress: () => this.handleClose()}
+                    ]}
                 >
                     <div className="user_item">
                         <div className="head">
-                            <img style={{width:'100%'}} src={`https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1781615267,834481015&fm=27&gp=0.jpg`} alt={`张山`}/>
+                            <img src={`${host}${card.headshot}`} alt={card.nickName}/>
                         </div>
                         <List>
-                            <Item>目的:asdasdasd</Item>
-                            <Item>年龄:asdasdasd</Item>
-                            <Item>性别:男</Item>
-                            <Item>地区:asdasdasd</Item>
-                            <Item>行业:asdasdasd</Item>
-                            <Item>爱好:asdasdasd</Item>
-                            <Item>学历:asdasdasd</Item>
-                            <Item>性格:asdasdasd</Item>
-                            <Item>学历:asdasdasd</Item>
+                            <Item>目的:{card.jy_yx && typeMap[card.jy_yx]}</Item>
+                            <Item>年龄:{card.age_range && typeMap[card.age_range]}</Item>
+                            <Item>性别:{card.sex && typeMap[card.sex]}</Item>
+                            <Item>地区:{card.province && typeMap[card.province]}</Item>
+                            <Item>行业:{card.profession && typeMap[card.profession]}</Item>
+                            <Item>爱好:{card.interest && typeMap[card.interest]}</Item>
+                            <Item>学历:{card.degree && typeMap[card.degree]}</Item>
+                            <Item>性格:{card.character && typeMap[card.character]}</Item>
                         </List>
                     </div>
                 </Modal>

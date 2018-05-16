@@ -36,7 +36,6 @@ export default class Fealty extends Component {
 
     handleGetData = ()=>{
         MomService.get24Xiao().then(res=>{
-            console.log(res)
             this.setState({
                 list:res || []
             })
@@ -60,11 +59,25 @@ export default class Fealty extends Component {
             <NavBar mode="dark" leftContent={[< Icon onClick={this.handleBack} key = "1" type = "left" / >]}>百行孝居先</NavBar>
             <div className="content">
                 <div>
-                    <List>
-                        {
-                            this.state.list.map(item => <Item onClick={() => this.handleRead(item.id)} key={item.id} extra={item.add_time}>{item.title}</Item>)
-                        }
-                    </List>
+                    <Flex wrap alignContent="center">
+                        <List style={{flex:1}}>
+                            {
+                                this.state.list.slice(0,7).map(item => <Item onClick={() => this.handleRead(item.id)} key={item.id} >{item.title}</Item>)
+                            }
+                        </List>
+
+                        <List style={{flex:1}}>
+                            {
+                                this.state.list.slice(8,16).map(item => <Item onClick={() => this.handleRead(item.id)} key={item.id} >{item.title}</Item>)
+                            }
+                        </List>
+
+                        <List style={{flex:1}}>
+                            {
+                                this.state.list.slice(17,23).map(item => <Item onClick={() => this.handleRead(item.id)} key={item.id} >{item.title}</Item>)
+                            }
+                        </List>
+                    </Flex>
                 </div>
             </div>
         </div>

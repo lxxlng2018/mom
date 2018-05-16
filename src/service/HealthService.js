@@ -20,6 +20,15 @@ export default {
             },'json')
         })
     },
+    getHealth:()=>{
+        return new Promise((reslove, rejcet) => {
+            $.post(`${host}/wap/healthuser/jksbm`,{},res=>{
+                if(res.status){
+                    reslove(res.data)
+                }
+            },'json')
+        })
+    },
     add:({
         title,
         content

@@ -35,11 +35,10 @@ var nativeShare = new NativeShare({
   	syncIconToTag: true,
   	syncTitleToTag: true,
 })
-export default class Share extends Component {
+export default class Sharep extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            userInfo:null,
             sharecode:null
         }
     }
@@ -47,11 +46,14 @@ export default class Share extends Component {
     componentDidMount() {
         let {match,location} = this.props
         let {params} = match
-        if(!params.sharecode){
-            UserService.getUserInfo().then(userInfo=>{
-                this.setState({userInfo,sharecode:userInfo.my_cbm})
-            })
-        }
+        // if(!params.sharecode){
+        //     UserService.getUserInfo().then(userInfo=>{
+        //         this.setState({userInfo,sharecode:userInfo.my_cbm})
+        //     })
+        // }
+        this.setState({
+            sharecode:params.sharecode
+        })
         
      }
 
@@ -62,7 +64,7 @@ export default class Share extends Component {
     handleShare =(type)=>{
         nativeShare.setShareData({
             icon: 'https://pic3.zhimg.com/v2-080267af84aa0e97c66d5f12e311c3d6_xl.jpg',
-            link: `${host}/wap/index/app#/sharep/${this.state.sharecode}`,
+            link: `${host}/wap/index/app#/share/${this.state.sharecode}`,
             title: '做一个光荣的健康传播志愿者',
             desc: '津贴收入可达数万、数十万',
             from: '健康传播',

@@ -28,7 +28,11 @@ import HealthService from '../service/HealthService'
 import UserService from '../service/UserService'
 
 const Item = List.Item
-var nativeShare = new NativeShare()
+var nativeShare = new NativeShare({
+     syncDescToTag: true,
+  	syncIconToTag: true,
+  	syncTitleToTag: true,
+})
 let host = base.host
 
 export default class MyCard extends Component {
@@ -41,6 +45,8 @@ export default class MyCard extends Component {
     }
 
     componentDidMount() {
+        let {match} = this.props
+        let {parmas} = match
         this.handleGetData()
         UserService.getUserInfo().then(userinfo=>{
             this.setState({
@@ -50,7 +56,7 @@ export default class MyCard extends Component {
     }
 
     handleGetData = ()=>{
-        HealthService.getList().then(res=>{
+        HealthService.getHealth().then(res=>{
             const {result} = res
             this.setState({
                 list:result||[]
@@ -58,11 +64,24 @@ export default class MyCard extends Component {
         })
     }
 
-    handleShare = ()=>{
+    handleShare =(title,id)=>{
+        let {userinfo} = this.state
+        nativeShare.setShareData({
+            icon: `${host}${userinfo.my_headphoto}`,
+            link: `${host}/wap/index/app#/read/${id}`,
+            title: `请您关注今天的中老年疾病防治专家提示`,
+            desc: title,
+            from: '健康传播',
+        })
+        
+        // 唤起浏览器原生分享组件(如果在微信中不会唤起，此时call方法只会设置文案。类似setShareData)
         try {
             nativeShare.call()
-        } catch (error) {
-           Toast.fail('暂不支持分享功能')
+            // 如果是分享到微信则需要 nativeShare.call('wechatFriend')
+            // 类似的命令下面有介绍
+        } catch(err) {
+        // 如果不支持，你可以在这里做降级处理
+            Toast.fail('暂不支持分享功能')
         }
     }
 
@@ -93,7 +112,7 @@ export default class MyCard extends Component {
                                         <img src={this.state.userinfo && host+this.state.userinfo.my_headphoto || "./icons/1.png"} alt=""/>
                                     </div>
                                   <div className="tips">请您关注今天的中老年疾病防治专家提示</div>
-                                  <div className="share-btn"><a onClick={this.handleShare} className="am-button am-button-primary am-button-small am-button-inline">送爸妈</a></div>
+                                  <div className="share-btn"><a onClick={()=>this.handleShare(item.title,item.id)} className="am-button am-button-primary am-button-small am-button-inline">送爸妈</a></div>
                                 </div>
                               <div onClick={()=>this.handleRead(item.id)} className="buttom-title">今日提示：{item.title} </div>
                             </div>

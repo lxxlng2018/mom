@@ -67,7 +67,6 @@ export default class Index extends Component {
             MomServcie.getHomePhotos(),
             MomServcie.getHomeFirends()
         ]).then(res=>{
-            console.log(res)
             this.setState({
                 list:res[0],
                 list1:res[1],
@@ -96,8 +95,8 @@ export default class Index extends Component {
         }
     }
 
-    handleAlert = ()=>{
-        Toast.fail('请登录后查看更多')
+    handleAlert = (msg)=>{
+        Toast.fail(msg?msg:`请登录后查看更多`)
     }
 
     handleModal = ()=>{
@@ -124,15 +123,25 @@ export default class Index extends Component {
                     touxiang: true
                 })
                 break;
+            case `我要传播`:
+               Modal.alert(`温馨提示`,`
+               传播健康，慈善吉祥。请将接下来的页面转发分享给您所有的朋友，
+               用您的传播码报名注册的第一轮志愿者，每注册一个，您的账户里将收到10元津贴，
+               第二轮、第三轮、第四轮报名注册的志愿者每注册一个，您的账户里将到1元津贴。
+               `,[{
+                   text:'我要分享',
+                   onPress:()=>this.handleAlert(`请登录`)
+               }])
+                break;
             default:
                 break;
         }
     }
 
     render() {
-        const gridItem = (item,index)=><div key={index} className="user_item">
+        const gridItem = (item,index)=><div key={index} style={{width:'60px'}} className="user_item">
             <div className="head">
-                <img style={{width:'100%'}} src={item.headshot||'http://p1.qzone.la/upload/20150102/a3zs6l69.jpg'} alt={item.nickName}/>
+                <img src={item.headshot||'http://p1.qzone.la/upload/20150102/a3zs6l69.jpg'} alt={item.nickName}/>
                 <div className="name">{item.nickName}</div>
             </div>
         </div>
@@ -151,15 +160,15 @@ export default class Index extends Component {
             </Flex>
             <div className="home-menu">
                 <Flex wrap="wrap">
-                    <a href="#/home">每日健康提醒</a>
-                    <a href="#/list">百行孝居先</a>
-                    <a href="#/experience">我的治病经验</a>
-                    <a href="#/prevention">出生缺陷预防</a>
-                    <a href="#/health">健康送爸妈</a>
-                    <a href="#/lecture">专家孕哺讲座</a>
-                    <a href="#/notes">青春婚恋须知</a>
-                    <a href="#/firends">交友大世界</a>
-                    <a href="#/difficult">疑难杂症120</a>
+                    <a href="#/">每日健康提醒</a>
+                    <a href="#/">百行孝居先</a>
+                    <a href="#/">我的治病经验</a>
+                    <a href="#/">出生缺陷预防</a>
+                    <a href="#/">健康送爸妈</a>
+                    <a href="#/">专家孕哺讲座</a>
+                    <a href="#/">青春婚恋须知</a>
+                    <a href="#/">交友大世界</a>
+                    <a href="#/">疑难杂症120</a>
                 </Flex>
             </div>
             <Carousel autoplay infinite className="home-carouel">
@@ -172,7 +181,7 @@ export default class Index extends Component {
                      <div className="block_title_l">每日健康提醒</div>
                     <List>
                         {
-                            this.state.list.map(item => <Item onClick={() => this.handleRead(item.id)} key={item.id} extra={item.add_time}>{item.title}</Item>)
+                            this.state.list.map(item => <Item onClick={() => this.handleRead(item.id)} key={item.id} >{item.title}</Item>)
                         }
                         <Item extra={<a onClick={()=>this.handleAlert()}>更多</a>}>&nbsp;</Item>
                     </List>
@@ -196,7 +205,7 @@ export default class Index extends Component {
                     </Tabs>
                     <List>
                         {
-                            this.state.list1.map(item => <Item onClick={() => this.handleRead(item.id)} key={item.id} extra={item.add_time}>{item.title}</Item>)
+                            this.state.list1.map(item => <Item onClick={() => this.handleRead(item.id)} key={item.id} >{item.title}</Item>)
                         }
                         <Item extra={<a onClick={()=>this.handleAlert()}>更多</a>}>&nbsp;</Item>
                     </List>
@@ -224,7 +233,7 @@ export default class Index extends Component {
                     </Tabs>
                     <List>
                         {
-                            this.state.list2.map(item => <Item onClick={() => this.handleRead(item.id)} key={item.id} extra={item.add_time}>{item.title}</Item>)
+                            this.state.list2.map(item => <Item onClick={() => this.handleRead(item.id)} key={item.id} >{item.title}</Item>)
                         }
                         <Item extra={<a onClick={()=>this.handleAlert()}>更多</a>}>&nbsp;</Item>
                     </List>
@@ -244,14 +253,14 @@ export default class Index extends Component {
                                 <div className="time">{item.add_time}</div>
                                     <div className="doctor-notice-content">
                                         <div className="doc-thumb">
-                                            <img src="http://txqg.oss-cn-shenzhen.aliyuncs.com/669mom/headshot/14075_100.png" alt=""/>
+                                            <img src="http://txqg.oss-cn-shenzhen.aliyuncs.com/669mom/headshot/WechatIMG1438.png" alt=""/>
                                         </div>
                                         <div className="tips">请您关注今天的中老年疾病防治专家提示</div>
                                         <div className="share-btn">
                                             <a onClick={this.handleAlert} className="am-button am-button-primary am-button-small am-button-inline">送爸妈</a>
                                         </div>
                                     </div>
-                                    <div className="buttom-title">今日提示：{item.title}</div>
+                                    <div onClick={()=>this.handleRead(item.id)} className="buttom-title">今日提示：{item.title}</div>
                                 </div>
                             })
                         }
@@ -260,22 +269,22 @@ export default class Index extends Component {
                 </div>
                 <div>
                     <div id="list4" className="block_title_l">百行孝居先</div>
-                    <Flex>
-                        <List style={{width:'30%'}}>
+                    <Flex wrap={true} alignContent="center">
+                        <List style={{flex:1}}>
                             {
                                 this.state.list4.slice(0,5).map(item=>{
                                 return <Item onClick={()=>this.handleRead(item.id)} key={item.id}>{item.title}</Item>
                                 })
                             }
                         </List>
-                        <List style={{width:'30%'}}>
+                        <List style={{flex:1}}>
                             {
                                 this.state.list4.slice(6,10).map(item=>{
                                 return <Item onClick={()=>this.handleRead(item.id)} key={item.id}>{item.title}</Item>
                                 })
                             }
                         </List>
-                        <List style={{width:'30%'}}>
+                        <List style={{flex:1}}>
                             {
                                 this.state.list4.slice(11,15).map(item=>{
                                 return <Item onClick={()=>this.handleRead(item.id)} key={item.id}>{item.title}</Item>
@@ -364,9 +373,10 @@ export default class Index extends Component {
                     <List>
                         {
                             this.state.list6.map(item=>{
-                            return <Item onClick={()=>{window.location.href=`${host}/wap/index/aread/id/${item.id}`}} key={item.id} extra={item.add_time}>{item.title}</Item>
+                            return <Item onClick={()=>{window.location.href=`${host}/wap/index/aread/id/${item.id}`}} key={item.id} >{item.title}</Item>
                             })
                         }
+                        <Item extra={<a onClick={()=>this.handleAlert()}>更多</a>}>&nbsp;</Item>
                     </List>
                 </div>
                 <div>
@@ -377,7 +387,7 @@ export default class Index extends Component {
                         <div style={{ flex: 1 }}>共15784位</div>
                     </Flex>
                     <div className="grid-user">
-                            {[...this.state.list8].splice(0,6).reverse().map(gridItem)}
+                            {[...this.state.list8].splice(0,8).reverse().map(gridItem)}
                     </div>
                 </div>
                 <div>
@@ -479,7 +489,7 @@ export default class Index extends Component {
                         </Flex>
 
                         <div className="grid-user">
-                            {this.state.list8.slice(0,16).map(gridItem)}
+                            {this.state.list8.slice(6,26).map(gridItem)}
                         </div>
                     </div>
                     <div>

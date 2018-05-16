@@ -22,6 +22,7 @@ import {
 } from 'antd-mobile';
 
 import ExpriceService from '../service/ExpriceService'
+import Header from '../components/Header'
 
 const Item = List.Item
 const RadioItem = Radio.RadioItem
@@ -163,7 +164,7 @@ export default class Experience extends Component {
     render() {
 
         return <div className="home">
-            <NavBar mode="dark" leftContent={[< Icon onClick={this.handleBack} key = "1" type = "left" / >]}>我的治病经验</NavBar>
+            <Header title="我的邀请" back={true} logout={true} />
             <div className="content">
                 <Tabs
                     tabs={[

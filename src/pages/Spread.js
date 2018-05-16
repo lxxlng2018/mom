@@ -141,15 +141,13 @@ export default class Spread extends Component {
                 reslove(userinfo.xiaojingka_url)
             } else {
                 return UserService.getXjk().then(res => {
-                    debugger
-                    let { xiaojingka_url } = res
                     this.setState({
                         userinfo: {
                             ...userinfo,
-                            xiaojingka_url
+                            xiaojingka_url:res
                         }
                     })
-                    reslove(xiaojingka_url)
+                    reslove(res)
                 })
             }
         }).then(xiaojingka_url => {
@@ -168,11 +166,7 @@ export default class Spread extends Component {
     }
 
     handleOpenShare = () => {
-       try {
-            nativeShare.call()
-        } catch (error) {
-           Toast.fail('暂不支持分享功能')
-        }
+       window.location.href="#/share"
     }
 
     handleBack = () => {

@@ -118,5 +118,21 @@ export default {
                     }
                 }, 'json')
         })
+    },
+
+    /**
+     * @name 提出邀请
+     */
+    invitate:data=>{
+        return new Promise((reslove, rejcect) => {
+            $
+                .post(`${host}/Wap/healthuser/addInvitation`, {
+                    ...data
+                }, function (res) {
+                    if (res.status) {
+                        reslove(res.data)
+                    }
+                }, 'json')
+        })
     }
 }
