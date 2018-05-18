@@ -8,6 +8,8 @@ import { createForm } from 'rc-form'
 import NativeShare from 'nativeshare'
 import base from '../config/base'
 import UserService from '../service/UserService'
+import Header from '../components/Header'
+import navigator from '../util/navigator'
 import {
     Flex,
     WhiteSpace,
@@ -52,7 +54,7 @@ export default class Share extends Component {
                 this.setState({userInfo,sharecode:userInfo.my_cbm})
             })
         }
-        
+        this.checkBroswer()
      }
 
     handleBack = () => {
@@ -60,8 +62,9 @@ export default class Share extends Component {
     }
 
     handleShare =(type)=>{
+        let { userInfo} = this.state
         nativeShare.setShareData({
-            icon: 'https://pic3.zhimg.com/v2-080267af84aa0e97c66d5f12e311c3d6_xl.jpg',
+            icon: `${host}${userInfo.my_headphoto}`,
             link: `${host}/wap/index/app#/sharep/${this.state.sharecode}`,
             title: '做一个光荣的健康传播志愿者',
             desc: '津贴收入可达数万、数十万',
@@ -75,13 +78,21 @@ export default class Share extends Component {
             // 类似的命令下面有介绍
         } catch(err) {
         // 如果不支持，你可以在这里做降级处理
-            Toast.fail('暂不支持分享功能')
+            Toast.fail('分享暂时只支持uc浏览器和qq浏览器')
         }
+    }
+
+    checkBroswer=()=>{
+        // alert(navigator.getUserAgent())
     }
 
     render() {
         return <div className="home">
-            <NavBar mode="dark" leftContent={[< Icon onClick={this.handleBack} key="1" type="left" />]}>我要传播</NavBar>
+            <Header
+                title="我要传播"
+                back
+                logout
+            />
             {
                 this.state.userInfo && <div className="share">
                     <a href="">分享到：</a>

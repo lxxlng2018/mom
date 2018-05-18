@@ -46,11 +46,6 @@ export default class Sharep extends Component {
     componentDidMount() {
         let {match,location} = this.props
         let {params} = match
-        // if(!params.sharecode){
-        //     UserService.getUserInfo().then(userInfo=>{
-        //         this.setState({userInfo,sharecode:userInfo.my_cbm})
-        //     })
-        // }
         this.setState({
             sharecode:params.sharecode
         })
@@ -61,38 +56,10 @@ export default class Sharep extends Component {
         window.location.hash = 'spread'
     }
 
-    handleShare =(type)=>{
-        nativeShare.setShareData({
-            icon: 'https://pic3.zhimg.com/v2-080267af84aa0e97c66d5f12e311c3d6_xl.jpg',
-            link: `${host}/wap/index/app#/share/${this.state.sharecode}`,
-            title: '做一个光荣的健康传播志愿者',
-            desc: '津贴收入可达数万、数十万',
-            from: '健康传播',
-        })
-        
-        // 唤起浏览器原生分享组件(如果在微信中不会唤起，此时call方法只会设置文案。类似setShareData)
-        try {
-            nativeShare.call(type)
-            // 如果是分享到微信则需要 nativeShare.call('wechatFriend')
-            // 类似的命令下面有介绍
-        } catch(err) {
-        // 如果不支持，你可以在这里做降级处理
-            Toast.fail('暂不支持分享功能')
-        }
-    }
-
     render() {
         return <div className="home">
             <NavBar mode="dark" leftContent={[< Icon onClick={this.handleBack} key="1" type="left" />]}>我要传播</NavBar>
-            {
-                this.state.userInfo && <div className="share">
-                    <a href="">分享到：</a>
-                    <a onClick={()=>this.handleShare('qqFriend')}><span style={{fontSize:20,color:'#00beff'}} className="iconfont icon-qq"></span></a>
-                    <a onClick={()=>this.handleShare('qZone')}><span style={{fontSize:20,color:'#00beff'}} className="iconfont icon-qunfengqqkongjian"></span></a>
-                    <a onClick={()=>this.handleShare('wechatFriend')}><span style={{fontSize:20,color:'green'}} className="iconfont icon-big-WeChat"></span></a>
-                    <a onClick={()=>this.handleShare('wechatTimeline')}><span style={{fontSize:20,color:'green'}} className="iconfont icon-pengyouquan"></span></a>
-                </div>
-            }
+            
             <div className="content" style={{padding:20}}>
                 <div>
                     <h2>做一个光荣的健康传播志愿者</h2>

@@ -23,6 +23,7 @@ import {
     Radio,
     Toast
 } from 'antd-mobile';
+import Header from '../components/Header'
 import base from '../config/base'
 import FirendService from '../service/FirendService'
 import UserService from '../service/UserService'
@@ -133,6 +134,18 @@ export default class Firends extends Component {
         })
     }
 
+    handleRemoveCheck = check=>{
+        let { type, checked, checkedId } = this.state;
+        checked[check] = null
+        checkedId[check] = null
+        this.setState({
+            checked,
+            modal: false
+        }, () => {
+            this.handleGetData()
+        })
+    }
+
     handleMenuTab = (index) => {
         switch (index) {
             case 0:
@@ -154,10 +167,6 @@ export default class Firends extends Component {
 
     handleBack = ()=>{
         window.location.href = '#/home'
-    }
-
-    componentDidCatch(error, info) {
-        console.log(error,info);
     }
 
     handleDetail = item=>{
@@ -202,7 +211,7 @@ export default class Firends extends Component {
         </div>
 
         return <div className="home">
-            <NavBar mode="dark" leftContent={[< Icon onClick={this.handleBack} key="1" type="left" />]}>交友大世界</NavBar>
+            <Header title="交友大世界" back logout/>
             <div className="content">
                 <Tabs
                     tabs={[
@@ -312,7 +321,7 @@ export default class Firends extends Component {
                                 {
                                     Object.keys(checked).map((item,index)=>{
                                         if(checked[item]){
-                                            return <Tag key={checked[item]?checked[item].id:index} style={{margin:'2px 5px'}} closable>{checked[item].name}</Tag>
+                                            return <Tag key={checked[item] ? checked[item].id : index} style={{ margin: '2px 5px' }} onClose={() => this.handleRemoveCheck(item)} closable>{checked[item].name}</Tag>
                                         }
                                     })
                                 }
@@ -353,21 +362,21 @@ export default class Firends extends Component {
                         { text: '关闭', onPress: () => this.handleClose()}
                     ]}
                 >
-                    <div className="user_item">
+                    <div className="user_item" style={{textAlign:'center',margin:'0 auto'}}>
                         <div className="head">
                             <img src={`${host}${card.headshot}`} alt={card.nickName}/>
                         </div>
-                        <List>
-                            <Item>目的:{card.jy_yx && typeMap[card.jy_yx]}</Item>
-                            <Item>年龄:{card.age_range && typeMap[card.age_range]}</Item>
-                            <Item>性别:{card.sex && typeMap[card.sex]}</Item>
-                            <Item>地区:{card.province && typeMap[card.province]}</Item>
-                            <Item>行业:{card.profession && typeMap[card.profession]}</Item>
-                            <Item>爱好:{card.interest && typeMap[card.interest]}</Item>
-                            <Item>学历:{card.degree && typeMap[card.degree]}</Item>
-                            <Item>性格:{card.character && typeMap[card.character]}</Item>
-                        </List>
                     </div>
+                    <List>
+                        <Item wrap>目的:{card.jy_yx && typeMap[card.jy_yx]}</Item>
+                        <Item wrap>年龄:{card.age_range && typeMap[card.age_range]}</Item>
+                        <Item wrap>性别:{card.sex && typeMap[card.sex]}</Item>
+                        <Item wrap>地区:{card.province && typeMap[card.province]}</Item>
+                        <Item wrap>行业:{card.profession && typeMap[card.profession]}</Item>
+                        <Item wrap>爱好:{card.interest && typeMap[card.interest]}</Item>
+                        <Item wrap>学历:{card.degree && typeMap[card.degree]}</Item>
+                        <Item wrap>性格:{card.character && typeMap[card.character]}</Item>
+                    </List>
                 </Modal>
             </div>
         </div>

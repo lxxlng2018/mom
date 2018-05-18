@@ -14,10 +14,11 @@ export default {
     /**
      * @name 获取公共文章
      */
-    getPublicList: (t) => {
+    getPublicList: (t,i) => {
         return new Promise((reslove, rejcet) => {
             $.post(`${host}/wap/health/alist`, {
-                t
+                t,
+                idxflg:i
             }, res => {
                 if(res.status){
                     reslove(res.data||[])

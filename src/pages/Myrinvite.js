@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import { instanceOf } from 'prop-types';
 import moment from 'moment';
+import base from '../config/base'
 import {
     Flex,
     WhiteSpace,
@@ -20,7 +21,8 @@ import {
     TextareaItem,
     Tag,
     Modal,
-    Radio
+    Radio,
+    Toast
 } from 'antd-mobile';
 
 import FirendService from '../service/FirendService'
@@ -28,25 +30,26 @@ import Header from '../components/Header'
 
 const Item = List.Item
 const RadioItem = Radio.RadioItem
+const host = base.host
 
 export default class Myrinvite extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            users:[],
-            types:[],
-            type:"age_range",
-            checked:{
-                jy_yx:null,
-                sex:null,
-                age_range:null,
-                SHENGSHI:null,
-                profession:null
+            users: [],
+            types: [],
+            type: "age_range",
+            checked: {
+                jy_yx: null,
+                sex: null,
+                age_range: null,
+                SHENGSHI: null,
+                profession: null
             },
-            cardShow:false,
-            card:{},
-            modal:false
+            cardShow: false,
+            card: null,
+            modal: false
         }
     }
 
@@ -54,41 +57,48 @@ export default class Myrinvite extends Component {
         this.handleGetData()
     }
 
-    handleGetData = ()=>{
-        FirendService.myInvitated().then(res=>{
-            // this.setState({types:res})
-            console.log(res);
+    handleGetData = () => {
+        this.handleGetTypes()
+        FirendService.myInvitated().then(res => {
             this.setState({
-                users:res.result||[]
+                users: res.result || []
             })
         })
     }
 
-    handleGetTypes = ()=>{
-        FirendService.getTypes().then(res=>{
-            this.setState({types:res})
+    handleGetTypes = () => {
+        FirendService.getTypes().then(res => {
+            this.setState({ types: res || [] }, () => {
+                let typeMap = {}
+                this.state.types.map(item => {
+                    typeMap[item.id] = item.name
+                })
+                this.setState({
+                    typeMap
+                })
+            })
         })
     }
 
-    handleModal = type=>{
+    handleModal = type => {
         this.setState({
-            modal:true,
+            modal: true,
             type
         })
     }
 
-    onClose = ()=>{
+    onClose = () => {
         this.setState({
-            modal:false
+            modal: false
         })
     }
 
-    handleCheck = checkedItem=>{
-        let {type,checked} = this.state;
+    handleCheck = checkedItem => {
+        let { type, checked } = this.state;
         checked[type] = checkedItem
         this.setState({
             checked,
-            modal:false
+            modal: false
         })
     }
 
@@ -111,20 +121,43 @@ export default class Myrinvite extends Component {
         }
     }
 
-    handleBack = ()=>{
+    handleAgree = () => {
+        let { card } = this.state
+        FirendService.agreeInvite(card.id).then(res => {
+            Toast.info('已同意申请')
+            this.setState({
+                cardShow: false,
+                card: null,
+            })
+        })
+    }
+
+    handleBack = () => {
         window.location.hash = 'home'
     }
 
+    handleClose = () => {
+        this.setState({
+            cardShow: false
+        })
+    }
+
+    handleDetail = item => {
+        this.setState({
+            cardShow: true,
+            card: item
+        })
+    }
 
     render() {
-        const { checked, type } = this.state
-        const gridItem = (item, index) => <div key={index} className="user_item">
+        const { checked, type, card, typeMap } = this.state
+        const gridItem = (item, index) => <div key={index} onClick={() => this.handleDetail(item)} className="user_item">
             <div className="head">
-                <img style={{ width: '100%' }} src={item.headshot} alt={item.id} />
+                <img style={{ width: '100%' }} src={item.headshot && host + item.headshot} alt={item.id} />
                 <div className="name">{item.id}</div>
             </div>
             <div className="peps">
-                目的：{item.jy_yx}
+                目的：{typeMap && typeMap[item.jy_yx]}
             </div>
             <div className="peps">
                 <Tag style={{ color: '#fff', background: '#f20' }}>待同意</Tag>
@@ -163,26 +196,28 @@ export default class Myrinvite extends Component {
 
                 <Modal
                     visible={this.state.cardShow}
-                    title="张山"
+                    title={card && card.nickName}
                     transparent
-                    footer={[{ text: '我要邀请', onPress: () => { } }]}
+                    footer={[
+                        { text: '同意', onPress: () => this.handleAgree() },
+                        { text: '关闭', onPress: () => this.handleClose() }
+                    ]}
                 >
-                    <div className="user_item">
+                    {card && [<div key={1} className="user_item" style={{ textAlign: 'center', margin: '0 auto' }}>
                         <div className="head">
-                            <img style={{ width: '100%' }} src={`https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1781615267,834481015&fm=27&gp=0.jpg`} alt={`张山`} />
+                            <img src={`${host}${card.headshot}`} alt={card.nickName} />
                         </div>
-                        <List>
-                            <Item>目的:asdasdasd</Item>
-                            <Item>年龄:asdasdasd</Item>
-                            <Item>性别:男</Item>
-                            <Item>地区:asdasdasd</Item>
-                            <Item>行业:asdasdasd</Item>
-                            <Item>爱好:asdasdasd</Item>
-                            <Item>学历:asdasdasd</Item>
-                            <Item>性格:asdasdasd</Item>
-                            <Item>学历:asdasdasd</Item>
-                        </List>
-                    </div>
+                    </div>,
+                        <List key={2}>
+                            <Item>目的:{card.jy_yx && typeMap[card.jy_yx]}</Item>
+                            <Item>年龄:{card.age_range && typeMap[card.age_range]}</Item>
+                            <Item>性别:{card.sex && typeMap[card.sex]}</Item>
+                            <Item>地区:{card.province && typeMap[card.province]}</Item>
+                            <Item>行业:{card.profession && typeMap[card.profession]}</Item>
+                            <Item>爱好:{card.interest && typeMap[card.interest]}</Item>
+                            <Item>学历:{card.degree && typeMap[card.degree]}</Item>
+                            <Item>性格:{card.character && typeMap[card.character]}</Item>
+                        </List>]}
                 </Modal>
             </div>
         </div>

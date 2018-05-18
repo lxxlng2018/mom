@@ -36,7 +36,7 @@ export default class Notes extends Component {
     }
 
     handleGetData = ()=>{
-        MomService.getPublicList(1).then(res=>{
+        MomService.getPublicList(1,2).then(res=>{
             this.setState({
                 list:res || []
             })

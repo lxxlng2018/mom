@@ -196,7 +196,6 @@ export default class Index extends Component {
                         }
                     ]}
                         onChange={(key)=>{
-                            console.log(key)
                             if(key.title == '我要谈经验'){
                                 return Toast.fail('请登录')
                             }
@@ -257,7 +256,7 @@ export default class Index extends Component {
                                         </div>
                                         <div className="tips">请您关注今天的中老年疾病防治专家提示</div>
                                         <div className="share-btn">
-                                            <a onClick={this.handleAlert} className="am-button am-button-primary am-button-small am-button-inline">送爸妈</a>
+                                            <a onClick={()=>this.handleAlert()} className="am-button am-button-primary am-button-small am-button-inline">送爸妈</a>
                                         </div>
                                     </div>
                                     <div onClick={()=>this.handleRead(item.id)} className="buttom-title">今日提示：{item.title}</div>
@@ -357,6 +356,7 @@ export default class Index extends Component {
                         autoplay
                         slideWidth={0.3}
                         dots={false}
+                        infinite
                         selectedIndex={1}
                     >
                         {

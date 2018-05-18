@@ -44,7 +44,7 @@ const App = () => (
       <Route path='/fealty' component={Fealty} />
       <Route path='/spread' component={Spread} />
       <Route path='/share' component={Share} />
-      <Route path='/share/:sharecode' component={Sharep} />
+      <Route path='/sharep/:sharecode' component={Sharep} />
       <Route path='/headshort' component={HeadShort} />
       <Route path='/lists/:type' component={Lists} />
       <Route path='/read/:id' component={Article} />

@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 import moment from 'moment';
 import NativeShare from 'nativeshare'
 import base from '../config/base'
+import Header from '../components/Header'
 import {
     Flex,
     WhiteSpace,
@@ -81,7 +82,7 @@ export default class MyCard extends Component {
             // 类似的命令下面有介绍
         } catch(err) {
         // 如果不支持，你可以在这里做降级处理
-            Toast.fail('暂不支持分享功能')
+            Toast.fail('分享暂时只支持uc浏览器和qq浏览器')
         }
     }
 
@@ -97,7 +98,11 @@ export default class MyCard extends Component {
 
     render() {
         return <div className="home">
-            <NavBar mode="dark" leftContent={[< Icon onClick={this.handleBack} key = "1" type = "left" />]}>健康送爸妈</NavBar>
+            <Header
+                title="健康送爸妈"
+                back
+                logout
+            />
             <div className="content">
                 <div className="top-notice">
                     温馨提示：百行孝居先。健康，是送给爸妈的最好礼物。无论您多忙，都要在周三、周六将“中老年疾病防治专家提示”转发分享给爸妈，作为最真情的问候，即使爸妈不会手机或您在爸妈身边，也要口头告诉。
@@ -109,7 +114,7 @@ export default class MyCard extends Component {
                               <div className="time">{item.add_time}</div>
                                 <div className="doctor-notice-content">
                                     <div className="doc-thumb">
-                                        <img src={this.state.userinfo && host+this.state.userinfo.my_headphoto || "./icons/1.png"} alt=""/>
+                                      <img src={this.state.userinfo && this.state.userinfo.my_headphoto && host+this.state.userinfo.my_headphoto || "./icons/1.png"} alt=""/>
                                     </div>
                                   <div className="tips">请您关注今天的中老年疾病防治专家提示</div>
                                   <div className="share-btn"><a onClick={()=>this.handleShare(item.title,item.id)} className="am-button am-button-primary am-button-small am-button-inline">送爸妈</a></div>

@@ -92,17 +92,28 @@ body {
 .grid-user {
     display: flex;
     flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
 }
 
 .user_item {
     align-items: baseline;
     flex-direction: inherit;
     margin: 10px;
+    flex: 1;
+    max-width: 100px;
+    text-align: center;
 }
 
 .user_item .head {
     padding: 10px;
     text-align: center;
+    word-wrap:break-word;
+    word-break: break-all;
+}
+
+.user_item .peps{
+    color:#999;
 }
 
 .head img {

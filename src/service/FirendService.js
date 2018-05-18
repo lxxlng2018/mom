@@ -66,6 +66,9 @@ export default {
         })
     }
     ,
+    /**
+     * @name 添加名片
+     */
     add: data => {
         return new Promise((reslove, rejcect) => {
             $
@@ -78,11 +81,40 @@ export default {
                 }, 'json')
         })
     },
+    /**
+     * @name 投放名片
+     */
     toFriendWord:data=>{
         return new Promise((reslove, rejcect) => {
             $
                 .post(`${host}/Wap/healthuser/toFriendWord`, {
                     ...data
+                }, function (res) {
+                    if (res.status) {
+                        reslove(res.data)
+                    }
+                }, 'json')
+        })
+    },
+    /**
+     * @name 撤回名片
+     */
+    toFriendWord:data=>{
+        return new Promise((reslove, rejcect) => {
+            $
+                .post(`${host}/Wap/healthuser/toFriendWord`, {
+                    ...data
+                }, function (res) {
+                    if (res.status) {
+                        reslove(res.data)
+                    }
+                }, 'json')
+        })
+    },
+    delFriendWord:()=>{
+        return new Promise((reslove, rejcect) => {
+            $
+                .post(`${host}/Wap/healthuser/delFriendWord`, {
                 }, function (res) {
                     if (res.status) {
                         reslove(res.data)
@@ -128,6 +160,21 @@ export default {
             $
                 .post(`${host}/Wap/healthuser/addInvitation`, {
                     ...data
+                }, function (res) {
+                    if (res.status) {
+                        reslove(res.data)
+                    }
+                }, 'json')
+        })
+    },
+    /**
+     * @name 同意申请
+     */
+    agreeInvite: inviteid=>{
+        return new Promise((reslove, rejcect) => {
+            $
+                .post(`${host}/Wap/healthuser/agreeInvite`, {
+                    inviteid
                 }, function (res) {
                     if (res.status) {
                         reslove(res.data)

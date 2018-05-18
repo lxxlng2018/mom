@@ -35,7 +35,7 @@ export default class Fealty extends Component {
     }
 
     handleGetData = ()=>{
-        MomService.get24Xiao().then(res=>{
+        MomService.getPublicList(11,2).then(res=>{
             this.setState({
                 list:res || []
             })
@@ -68,13 +68,13 @@ export default class Fealty extends Component {
 
                         <List style={{flex:1}}>
                             {
-                                this.state.list.slice(8,16).map(item => <Item onClick={() => this.handleRead(item.id)} key={item.id} >{item.title}</Item>)
+                                this.state.list.slice(8,15).map(item => <Item onClick={() => this.handleRead(item.id)} key={item.id} >{item.title}</Item>)
                             }
                         </List>
 
                         <List style={{flex:1}}>
                             {
-                                this.state.list.slice(17,23).map(item => <Item onClick={() => this.handleRead(item.id)} key={item.id} >{item.title}</Item>)
+                                this.state.list.slice(16,23).map(item => <Item onClick={() => this.handleRead(item.id)} key={item.id} >{item.title}</Item>)
                             }
                         </List>
                     </Flex>
