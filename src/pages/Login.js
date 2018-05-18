@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import menus from '../config/menu';
 import UserService from '../service//UserService'
+import navigator from '../util/navigator'
 import {
     Flex,
     WhiteSpace,
