@@ -250,7 +250,7 @@ export default class Difficult extends Component {
         const {modal,userinfo} = this.state;
         let {id,title,replay_content} = modal
         DifficultService.addXX({
-            title:`${userinfo.true_name}回复说：${title}`,
+            title:`${userinfo.true_name}回复到`,
             content:replay_content,
             reply_id:id
         }).then(res=>{
@@ -272,7 +272,7 @@ export default class Difficult extends Component {
         const {thank,userinfo} = this.state;
         let {id,title,replay_content} = thank
         DifficultService.addThank({
-            title:`${userinfo.true_name}感谢：${title}`,
+            title:`${userinfo.true_name}感谢道`,
             content:replay_content,
             reply_id:id
         }).then(res=>{

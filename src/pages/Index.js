@@ -61,7 +61,7 @@ export default class Index extends Component {
             MomServcie.getPublicList(8),
             MomServcie.getPublicList(9),
             MomServcie.getPublicList(10),
-            MomServcie.getPublicList(11),
+            MomServcie.getPublicList(11,2),
             MomServcie.getHomeSpeech(),
             MomServcie.getPublicList(1),
             MomServcie.getHomePhotos(),
@@ -101,6 +101,10 @@ export default class Index extends Component {
 
     handleModal = ()=>{
         Toast.fail('请登录后查看更多')
+    }
+
+    handleScroll = (to)=>{
+        window.scrollTo(0,to);
     }
 
     handleOpen = (item)=>{
@@ -160,8 +164,8 @@ export default class Index extends Component {
             </Flex>
             <div className="home-menu">
                 <Flex wrap="wrap">
-                    <a href="#/">每日健康提醒</a>
-                    <a href="#/">百行孝居先</a>
+                    <a onClick={()=>this.handleScroll(372)}>每日健康提醒</a>
+                    <a onClick={()=>this.handleScroll(532*3)}>百行孝居先</a>
                     <a href="#/">我的治病经验</a>
                     <a href="#/">出生缺陷预防</a>
                     <a href="#/">健康送爸妈</a>
@@ -237,8 +241,10 @@ export default class Index extends Component {
                         <Item extra={<a onClick={()=>this.handleAlert()}>更多</a>}>&nbsp;</Item>
                     </List>
                 </div>
-                <div>
-                    <a href="#/public_vedio"><img style={{width:'100%'}} src="http://txqg.oss-cn-shenzhen.aliyuncs.com/669mom/wap/%E8%AD%A6%E9%92%9F%E9%95%BF%E9%B8%A3%E5%9B%BE%E7%89%87.jpg" alt=""/></a> 
+                <div className="ad-img">
+                    <a className="btn-ad-a" href="#/public_vedio"></a> 
+                    <a className="btn-ad-b" href="https://x.eqxiu.com/s/WKUcA5wj?eqrcode=1&share_level=1&amp;from_user=59fbcc00-aab9-4b07-ae77-db872730786a&from_id=0ee4d5c6-8917-44d6-9814-a1a7932fc953&share_time=1526625862156&from=singlemessage）"></a> 
+                    <img style={{width:'100%'}} src="http://txqg.oss-cn-shenzhen.aliyuncs.com/669mom/wap/%E8%AD%A6%E9%92%9F%E9%95%BF%E9%B8%A3%E5%9B%BE%E7%89%87.jpg" alt=""/>
                 </div>
                 <div>
                     <div className="block_title_l">健康送爸妈</div>
@@ -249,7 +255,7 @@ export default class Index extends Component {
                         {
                             this.state.list3.map(item=>{
                             return <div key={item.id} className="doctor-notice">
-                                <div className="time">{item.add_time}</div>
+                                <div className="time">{item.add_time.substring(0,10)}</div>
                                     <div className="doctor-notice-content">
                                         <div className="doc-thumb">
                                             <img src="http://txqg.oss-cn-shenzhen.aliyuncs.com/669mom/headshot/WechatIMG1438.png" alt=""/>
@@ -271,21 +277,21 @@ export default class Index extends Component {
                     <Flex wrap={true} alignContent="center">
                         <List style={{flex:1}}>
                             {
-                                this.state.list4.slice(0,5).map(item=>{
+                                this.state.list4.slice(0,4).map(item=>{
                                 return <Item onClick={()=>this.handleRead(item.id)} key={item.id}>{item.title}</Item>
                                 })
                             }
                         </List>
                         <List style={{flex:1}}>
                             {
-                                this.state.list4.slice(6,10).map(item=>{
+                                this.state.list4.slice(5,9).map(item=>{
                                 return <Item onClick={()=>this.handleRead(item.id)} key={item.id}>{item.title}</Item>
                                 })
                             }
                         </List>
                         <List style={{flex:1}}>
                             {
-                                this.state.list4.slice(11,15).map(item=>{
+                                this.state.list4.slice(10,14).map(item=>{
                                 return <Item onClick={()=>this.handleRead(item.id)} key={item.id}>{item.title}</Item>
                                 })
                             }
@@ -355,7 +361,7 @@ export default class Index extends Component {
                     <Carousel 
                         autoplay
                         slideWidth={0.3}
-                        dots={false}
+                        dots={true}
                         infinite
                         selectedIndex={1}
                     >
@@ -512,7 +518,7 @@ export default class Index extends Component {
                 </div>
             </div>
             <Modal key={2} transparent={true} maskClosable={true} onClose={this.handleClose} visible={this.state.modal_xj} title="我的孝敬卡">
-                <img style={{ maxWidth: '200px' }} src={`${host}/uploads/xiaojingka/20180506/15255958463705.jpg`} />
+                <img style={{ maxWidth: '200px' }} src={`http://txqg.oss-cn-shenzhen.aliyuncs.com/669mom/wap/WechatIMG1664.jpeg`} />
             </Modal>
             <Modal key={3} transparent={true} maskClosable={true} onClose={this.handleClose} visible={this.state.touxiang} title="我的头像">
                 <img style={{ maxWidth: '200px' }} src={`http://txqg.oss-cn-shenzhen.aliyuncs.com/669mom/headshot/14075_100.png`} />

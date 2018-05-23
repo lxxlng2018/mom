@@ -16,7 +16,7 @@ import {
     SearchBar,
     Button,
     Popover,
-    TextareaItem
+    TextareaItem,
 } from 'antd-mobile';
 
 import MomService from '../service/MomService'
@@ -53,6 +53,7 @@ export default class Notes extends Component {
         window.location.href = '#/home'
     }
 
+
     render() {
 
         return <div className="home">
@@ -60,7 +61,7 @@ export default class Notes extends Component {
             <div className="content">
                  <List>
                         {
-                            this.state.list.map(item => <Item onClick={() => this.handleRead(item.id)} key={item.id} extra={item.add_time}>{item.title}</Item>)
+                            this.state.list.map(item => <Item onClick={() => this.handleRead(item.id)} key={item.id}>{item.title}</Item>)
                         }
                     </List>
             </div>

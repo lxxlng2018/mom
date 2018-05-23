@@ -59,7 +59,7 @@ export default {
         reply_id
     })=>{
         return new Promise((reslove, rejcet) => {
-            $.post(`${host}/wap/healthuser/addxxbz`, {
+            $.post(`${host}/wap/healthuser/addzryl`, {
                 title,
                 content,
                 reply_id

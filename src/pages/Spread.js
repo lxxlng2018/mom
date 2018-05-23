@@ -108,7 +108,7 @@ export default class Spread extends Component {
 
     handleMyCb = () => {
         let { userinfo } = this.state
-        Modal.alert('我的传播码', `${userinfo.my_cbm}`, [{ text: '确认', onPress: () => { } }])
+        let m = Modal.alert('我的传播码', `${userinfo.my_cbm}`, [{ text: '确认',onPress:()=>m.close() }])
     }
 
     handleGetMyAccount = () => {
@@ -118,8 +118,8 @@ export default class Spread extends Component {
                 reslove(res.my_acc)
             })
         }).then(my_alipay => {
-            Modal.prompt('我的账户', '输入支付宝账户', [
-                { text: '取消' },
+           let m = Modal.prompt('我的账户', '输入支付宝账户', [
+                { text: '取消',onPress:()=>m.close() },
                 { text: '保存', onPress: value => this.handleUpdateMyAccount(value) },
             ], 'default', `${my_alipay || ''}`)
         })
@@ -237,7 +237,7 @@ export default class Spread extends Component {
             ]}
         >
             <div>
-                温馨提示：传播健康，慈善吉祥。请将接下来的页面分享给您所有的朋友，用您的传播码报名的第一轮会员，每注册一个，您的账户将收到10元现金，第二轮、第三轮、第四轮报名注册的会员每注册一个，您的账户里将得到1元奖金。
+                传播健康，慈善吉祥。请将接下来的页面转发分享给您所有的朋友，用您的传播码报名注册的第一轮志愿者，每注册一个，您的账户里将收到10元津贴，第二轮、第三轮、第四轮报名注册的志愿者每注册一个，您的账户里将到1元津贴。
             </div>
         </Modal>
         ]

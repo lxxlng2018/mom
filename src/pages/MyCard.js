@@ -22,7 +22,8 @@ import {
     Tag,
     Picker,
     InputItem,
-    Toast
+    Toast,
+    Modal
 } from 'antd-mobile';
 import FirendService from '../service/FirendService'
 import Header from '../components/Header'
@@ -136,8 +137,16 @@ export default class MyCard extends Component {
                 if (res.data) {
                     return Toast.fail('名片添加失败')
                 }
-                Toast.info('名片已保存,请点击投放')
-                window.location.href = '#/mycard'
+                let m = Modal.alert('提示','名片已保存，请点击投放',[
+                    {
+                        text:'投放',
+                        onPress:()=>this.handleSend()
+                    },
+                    {
+                        text:'取消',
+                        onPress:()=>m.close()
+                    }
+                ])
             })
     }
 
@@ -158,7 +167,6 @@ export default class MyCard extends Component {
         let { data } = this.state
         FirendService.delFriendWord().then(res => {
             if (!res.data) {
-                return
                 Toast.info('名片已撤回')
                 window.location.reload()
             }
@@ -185,7 +193,7 @@ export default class MyCard extends Component {
                     onChange={(tab, index) => {
                         this.handleMenuTab(index)
                     }}></Tabs>
-                <List renderHeader="我的名片">
+                <List>
                     <InputItem
                         type="string"
                         placeholder="输入网名"
@@ -207,7 +215,7 @@ export default class MyCard extends Component {
                                     width: 60
                                 }}
                                 src={host + this.state.data.headshot}
-                                alt="" />}
+                                />}
                         </div>
                         <div style={{
                             flex: 3
@@ -333,14 +341,13 @@ export default class MyCard extends Component {
                             display: 'flex',
                             alignItems: 'center'
                         }}>
-                        {!this.state.data.id && <Button
+                        {!this.state.world && <Button
                             style={{
                                 margin: '0 10px'
                             }}
                             inline
                             onClick={this.submit}
                             type="primary">提交</Button>}
-                        {this.state.data.id && !this.state.world && [<Button key={1} style={{ margin: '0 10px' }} onClick={this.submit} inline type="primary">保存</Button>, <Button key={2} onClick={this.handleSend} inline type="primary">投放</Button>]}
                         {this.state.world && <Button onClick={this.handleCancel} inline type="primary">撤回</Button>}
                     </Item>
                 </List>

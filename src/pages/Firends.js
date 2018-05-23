@@ -303,6 +303,7 @@ export default class Firends extends Component {
                                     }}
                                     icon="down"
                                     size="small"
+                                    onClick={()=>this.handleModal('aihao')}
                                     className="am-button-borderfix">爱好</Button>
                             </div>
                         </Flex>

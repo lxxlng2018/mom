@@ -50,6 +50,7 @@ const App = () => (
       <Route path='/read/:id' component={Article} />
       <Route path='/help/:id' component={HelpContent} />
       <Route path='/public_vedio' component={PublicVedio} />
+      <Route path='/about' component={PublicVedio} />
       <Route path='/' component={Index} />
     </Switch>
   </Router>

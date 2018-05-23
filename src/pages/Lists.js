@@ -65,7 +65,7 @@ export default class Lists extends Component {
 
     render() {
         return <div className="home">
-            <NavBar mode="dark" leftContent={[< Icon onClick={this.handleBack} key = "1" type = "left" />]}>健康提醒</NavBar>
+            <NavBar mode="dark" leftContent={[< Icon onClick={this.handleBack} key = "1" type = "left" />]}></NavBar>
             <div className="content" >
                 <List>
                     {

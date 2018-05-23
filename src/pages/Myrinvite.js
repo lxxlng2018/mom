@@ -153,14 +153,19 @@ export default class Myrinvite extends Component {
         const { checked, type, card, typeMap } = this.state
         const gridItem = (item, index) => <div key={index} onClick={() => this.handleDetail(item)} className="user_item">
             <div className="head">
-                <img style={{ width: '100%' }} src={item.headshot && host + item.headshot} alt={item.id} />
-                <div className="name">{item.id}</div>
+                <img src={item.headshot && host + item.headshot} alt={item.id} />
+                <div className="name">{item.nickName}</div>
             </div>
             <div className="peps">
                 目的：{typeMap && typeMap[item.jy_yx]}
             </div>
             <div className="peps">
-                <Tag style={{ color: '#fff', background: '#f20' }}>待同意</Tag>
+                {
+                    item.flag && <Tag style={{ color: '#fff', background: 'green' }}>已同意</Tag>
+                }
+                {
+                    !item.flag && <Tag style={{ color: '#fff', background: '#f20' }}>待同意</Tag>
+                }
             </div>
         </div>
 
@@ -188,9 +193,9 @@ export default class Myrinvite extends Component {
                             padding: '30px 5px',
                             backgroundColor: '#fff'
                         }}>
-                        <div className="grid-user">
+                        <Flex>
                             {this.state.users.map(gridItem)}
-                        </div>
+                        </Flex>
                     </div>
                 </Tabs>
 

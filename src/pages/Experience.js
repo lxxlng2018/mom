@@ -164,7 +164,7 @@ export default class Experience extends Component {
     render() {
 
         return <div className="home">
-            <Header title="我的邀请" back={true} logout={true} />
+            <Header title="我们的治病经验" back={true} logout={true} />
             <div className="content">
                 <Tabs
                     tabs={[

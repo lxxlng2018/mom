@@ -6,6 +6,11 @@ body {
     padding: 0 0 30px;
 }
 
+.home{
+    max-width: 600px;
+    margin:auto;
+}
+
 .ant-advanced-search-form {
     margin: 20px 0;
 }
@@ -68,11 +73,9 @@ body {
     display: block;
     background: #59d6ac;
     color: #fff;
-    width: 100%;
     font-size: 20px;
     text-align: center;
     padding: 10px;
-    margin-left: -20px;
 }
 
 .am-button-borderfix.am-button-icon {
@@ -371,6 +374,7 @@ input:active~.box-icon {
 .buttom-title {
     text-align: center;
     padding: 5px;
+    font-weight: bold;
 }
 
 .am-list-b {
@@ -410,4 +414,25 @@ input:active~.box-icon {
 
 .share a{
     margin-right: 10px;
+}
+
+.ad-img{
+    position: relative;
+}
+
+.ad-img [class^='btn-ad-']{
+    position: absolute;
+    display: block;
+    width:400px;
+    height: 85px;
+}
+
+.btn-ad-a {
+    top:172px;
+    right:34px;
+}
+
+.btn-ad-b {
+    top:272px;
+    right:34px;
 }
